@@ -1,0 +1,10 @@
+body {
+  margin: 0;
+}
+p{
+  margin:0;
+}
+
+.el-table th {
+  background-color: #f0f0f0; /* 这里可以修改为你想要的颜色值 */
+}

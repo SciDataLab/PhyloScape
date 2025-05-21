@@ -1,0 +1,32 @@
+{
+  "name": "my-vue3-app",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@types/highcharts": "^7.0.0",
+    "axios": "^0.27.2",
+    "echarts": "^5.4.3",
+    "element-plus": "^2.2.10",
+    "highcharts": "^11.1.0",
+    "nprogress": "^0.2.0",
+    "ol": "^5.3.3",
+    "ol-echarts": "^3.0.0",
+    "pinia": "^2.0.17",
+    "sass": "^1.57.1",
+    "sass-loader": "^13.2.0",
+    "vue": "^3.2.37",
+    "vue-router": "4",
+    "vue-simple-uploader": "^0.7.6"
+  },
+  "devDependencies": {
+    "@types/nprogress": "^0.2.0",
+    "@vitejs/plugin-vue": "^3.0.0",
+    "vite": "^4.1.4"
+  },
+  "type": "module"
+}

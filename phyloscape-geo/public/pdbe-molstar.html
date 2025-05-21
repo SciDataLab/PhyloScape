@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <title>PDBe Molstar - Helper functions</title>
+
+    <!-- Molstar CSS & JS -->
+    <link rel="stylesheet" type="text/css" href="./pdbe-molstar-light-1.2.1.css">
+    <script type="text/javascript" src="./pdbe-molstar-plugin-1.2.1.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .msp-plugin .msp-layout-standard {
+            border: 0;
+        }
+        
+        #myViewer {
+            width: 100%;
+            height: 100vh;
+        }
+
+        .msp-plugin .msp-btn-link-toggle-off,
+        .msp-plugin .msp-btn-link-toggle-off:active,
+        .msp-plugin .msp-btn-link-toggle-off:focus {
+            color: #666 !important;
+        }
+
+        .msp-plugin .msp-semi-transparent-background {
+            background-color: #eee;
+        }
+
+        .msp-logo {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="myViewer"></div>
+    <script>
+        const webUrl = 'http://darwintree.cn/PhyloScape/'
+        function GetQueryString(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+            var r = window.location.search.substr(1).match(reg);  //获取url中"?"符后的字符串并正则匹配
+            var context = "";
+            if (r != null)
+                context = r[2];
+            reg = null;
+            r = null;
+            return context == null || context == "" || context == "undefined" ? "" : context;
+        }
+
+        //Create plugin instance
+        var viewerInstance = new PDBeMolstarPlugin();
+
+        //Set options (Checkout available options list in the documentation)
+
+        var options = {
+            customData: {
+                // url: `${GetQueryString("api")}/pdb_files/${GetQueryString("bid")}/${GetQueryString("name")}`,
+                // url: `/api/cyp51/pdb/${GetQueryString("name")}`,
+                url:webUrl + `jhs/pdb?id=${GetQueryString("id")}&node=${GetQueryString("node")}`,
+                format: 'pdb',
+            },
+            hideControls: true,
+            hideStructure: false,  //['polymer', 'het', 'water', 'carbs', 'nonStandard', 'coarse']
+            // alphafoldView: true,
+            bgColor: { r: 255, g: 255, b: 255 },
+            // hideCanvasControls: 
+            hideCanvasControls: ['controlToggle'], //['selection', 'animation', 'controlToggle', 'controlInfo']
+        }
+
+        //Get element from HTML/Template to place the viewer 
+        var viewerContainer = document.getElementById('myViewer');
+
+        //Call render method to display the 3D view
+        viewerInstance.render(viewerContainer, options);
+
+    </script>
+</body>
+
+</html>

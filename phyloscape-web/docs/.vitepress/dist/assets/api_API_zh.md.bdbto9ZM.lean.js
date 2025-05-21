@@ -1,0 +1,1 @@
+import{_ as s,c as e,o as n,ae as l}from"./chunks/framework.D04dDT8G.js";const u=JSON.parse('{"title":"全局API","description":"","frontmatter":{},"headers":[],"relativePath":"api/API_zh.md","filePath":"api/API_zh.md"}'),o={name:"api/API_zh.md"};function t(i,a,r,p,c,d){return n(),e("div",null,a[0]||(a[0]=[l("",794)]))}const b=s(o,[["render",t]]);export{u as __pageData,b as default};

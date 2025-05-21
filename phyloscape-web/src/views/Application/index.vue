@@ -2337,6 +2337,7 @@ const handleMessageIndex = (event) => {
 }
 
 onMounted(() => {
+  treeOridinaryConfig.language = localStorage.getItem("language") || "en";
   oIframe2 = document.getElementById("panel2frameMap");
   oIframe3 = document.getElementById("panel3frameMap");
   oIframe4 = document.getElementById("panel4frameMap");

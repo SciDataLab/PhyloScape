@@ -1394,6 +1394,7 @@ const selectdemo2Int = (params) => {
 };
 
 onMounted(() => {
+  treeOridinaryConfig.language = localStorage.getItem("language") || "en";
   cwidth.value = panel2.value.offsetWidth;
   cheight.value = panel2.value.offsetHeight;
   if (route.query.id) {

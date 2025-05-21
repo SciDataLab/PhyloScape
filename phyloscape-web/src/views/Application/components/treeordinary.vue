@@ -3192,6 +3192,7 @@ const getConfig = (value) => {
   jhscfg(params).then((res) => {
     if (res.code == 0) {
       treeconfig.value = JSON.parse(JSON.stringify(res.cfg));
+      treeconfig.value.language = 'en'
       stretchdatamin.value = res.cfg.stretch.min_len;
       stretchdatamax.value = res.cfg.stretch.max_len;
       if (res.tree_file_cfg) {

@@ -243,6 +243,7 @@ const handleSetLanguage = (lang) => {
         ? docUrl + "doc/indexzh.html"
         : docUrl + "doc/indexen.html";
   });
+  
 };
 
 onMounted(() => {

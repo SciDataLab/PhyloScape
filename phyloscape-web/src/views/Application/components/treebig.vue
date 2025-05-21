@@ -444,6 +444,7 @@ const getConfig = (value) => {
     if (res.code == 0) {
       const cfg = res.cfg;
       treebigconfig.value.id = cfg.id;
+      treebigconfig.value.language = 'en'
       treebigconfig.value.source = cfg.source;
       treebigconfig.value.type = cfg.type;
       treebigconfig.value.fontColour = cfg.fontColour;

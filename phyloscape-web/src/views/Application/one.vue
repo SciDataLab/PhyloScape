@@ -215,7 +215,7 @@
   </div>
 </template>
 <script setup>
-import { ref, reactive, nextTick, onMounted } from "vue";
+import { ref, reactive, watch,nextTick, onMounted } from "vue";
 import { jhscentent, jhssave, jhscfg } from "@/api/application/index.js";
 import { ElMessage, ElMessageBox } from "element-plus";
 import treeicon from "@/assets/application/treeicon.png";
@@ -238,12 +238,14 @@ import TreeBig from "./components/treebig.vue";
 import { useRouter, useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
 import { useUserInfo } from "@/store/userinfo.js";
+import { useStore } from "@/store";
 import introJs from "intro.js";
 import "intro.js/introjs.css"; // 引入 intro.js 的样式
 const guserinfo = useUserInfo();
 const { t } = useI18n();
 const router = useRouter();
 const route = useRoute();
+const store = useStore();
 const curpanelnum = ref(1);
 const selectdemo1 = ref("odemo1");
 const shareid = ref(0);
@@ -327,7 +329,6 @@ let treeOridinaryConfig = reactive({
   leafs: { show: true },
   position: [20, 20],
   separation: 35,
-  language: "zh",
   scale: 1,
   rotationAngle: -1,
   isPhylogram: true,
@@ -620,7 +621,9 @@ const tabTreeChange = () => {
     selectdemo1.value = "odemo1"
     getInitOrdinaryTree();
   } else if (panel1curtype.value == "big") {
-    getInitBigTree();
+    curdemoopt.value = selectdemoopt1;
+    selectdemo1.value = "ldemo1"
+    showselectdemo1()
   }
 };
 const selectdemo1Change = () => {
@@ -727,6 +730,11 @@ const showselectdemo1 = () => {
   } else if (selectdemo1.value == "canFam6") {
     params.id = 107;
     params.treeid = 2474;
+    selectdemo1Int(params);
+  } else if (selectdemo1.value == "ldemo1") {
+    params.id = 300;
+    params.treeid = 3540;
+    params.tree_type = "big";
     selectdemo1Int(params);
   } else {
     location.reload();
@@ -878,7 +886,6 @@ const startIntro = () => {
 };
 onMounted(() => {
   //如果是gallery传过来的值获取
-
   if (route.query.id) {
     shareid.value = route.query.id;
     fromtype.value = route.query.from;

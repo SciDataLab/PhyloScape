@@ -101,6 +101,10 @@ export const selectdemoopt1 = [{
 },{
   label:'LTR Evolution & Expression: canFam6 (http://data.iscr.ac.cn/ltr/#/ltrsindex?name=Bos+taurus)',
   value:'canFam6'
+},
+{
+  label:'Large Tree',
+  value:'ldemo1'
 }]
 export const selectdemoopt2 = [
   {

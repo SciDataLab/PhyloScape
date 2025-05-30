@@ -110,11 +110,11 @@ const menurouter = computed(() => [
     children:[
     {
         index: "docs/application",
-        name: "PhyloScape web application",
+        name: `${t("common.docs1")}`,
       },
       {
         index: "docs/library",
-        name: "PhyloScape JS library",
+        name:  `${t("common.docs2")}`,
       },
     ]
   },

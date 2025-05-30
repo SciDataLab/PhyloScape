@@ -4,8 +4,8 @@ import zh from './zh' //中文
  
 const i18n = createI18n({
   legacy: false, // 使用CompotitionAPI必须添加这条.
-  locale: localStorage.getItem('lang') || 'zh', // set locale设置默认值
-  fallbackLocale: 'zh', // set fallback locale
+  locale: localStorage.getItem('lang') || 'en', // set locale设置默认值
+  fallbackLocale: 'en', // set fallback locale
   messages: {
     en,
     zh, // set locale messages

@@ -1470,8 +1470,10 @@ const startIntro = () => {
       },
       {
         // element 选中第一个el-collapse-item
-        element: document.querySelector(
-          ".collapsewrap .el-collapse-item:nth-child(1)"
+        element: panel1curtype == 'ordinary'? document.querySelector(
+          ".treeordinarywrap .el-collapse-item:nth-child(1)"
+        ): document.querySelector(
+          ".treebigwrap .el-collapse-item:nth-child(1)"
         ),
         intro: "2.Upload a tree",
       },

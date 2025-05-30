@@ -13,7 +13,7 @@
       <el-form-item :label="$t('application.islegend')">
           <el-switch active-color="#42bec3" v-model="mapdensityForm.legend" @change="handleChange" />
         </el-form-item>
-      <el-form-item label="饼图配色">
+      <el-form-item :label="ocolor">
             <ul>
                 <li v-for="(item,index) in piecoloropts">
                     {{ index }}

@@ -12,7 +12,7 @@
           @change="handleChange"
         />
       </el-form-item>
-      <el-form-item :label="$t('application.piecolor')">
+      <el-form-item :label="$t('application.ocolor')">
         <ul>
           <li v-for="(item, index) in piecoloropts">
             {{ index }}

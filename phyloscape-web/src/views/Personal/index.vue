@@ -40,6 +40,7 @@
 <script setup>
   import {
     ref,
+    computed,
     onMounted
   } from 'vue'
   import {useRouter,
@@ -55,7 +56,7 @@
   const curactive = ref(null)
   const router = useRouter();
   const route = useRoute();
-  const leftmenurouter = [
+  const leftmenurouter = computed(()=>[
     {
       index: "/personal/data/list",
       name: "我的数据",
@@ -64,7 +65,7 @@
       index: "/personal/share/list",
       name: "我的共享",
     }
-  ];
+  ]);
   const handleSelect = (key) =>{
     router.push({
       path: key,

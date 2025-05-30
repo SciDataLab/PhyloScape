@@ -3158,6 +3158,7 @@ const onFileChange = (e) => {
 const importJSON = () => {
   const input = document.querySelector(".ordinaryfile");
   input.click();
+  console.log(treeconfig.value);
 };
 const exportJSON = () => {
   let jsonData = treeconfig.value;

@@ -1,6 +1,8 @@
 export default {
   common: {
     title: "提示",
+    docs1:"PhyloScape Web 应用程序文档",
+    docs2:"PhyloScape JS 库文档",
     docs: "文档",
     api: "API",
     plugins: "插件",
@@ -105,6 +107,7 @@ export default {
 
     islegend:'是否配置图例',
     piecolor:'饼图配色',
+    ocolor:'配色',
     isouter:'是否标注外圈',
     linecurve:'线曲线',
     linetype:'线类型',
@@ -147,6 +150,8 @@ export default {
     isshared:'是否共享',
     opt:'操作',
     del:'删除',
-    edit:'编辑'
+    edit:'编辑',
+    mydata:'我的数据',
+    sharedtrees:'我的共享'
   }    
 };

@@ -67,7 +67,12 @@
         </div>
       </div>
     </div>
-    <!-- feature -->
+    <!-- 引用 -->
+    <div class="line citation" style="margin-bottom: 0">
+      <p class="title">{{ $t("home.citation") }}</p>
+      <div class="citationinfo" v-html="$t('home.citationinfo')"></div>
+    </div>
+    <!-- 协议 -->
     <div class="line license" style="margin-bottom: 0">
       <p class="title">{{ $t("home.license") }}</p>
       <div class="licenseinfo" v-html="$t('home.licenseinfo')"></div>
@@ -292,6 +297,13 @@ const goPage = (params) => {
           }
         }
       }
+    }
+  }
+  .citation{
+    .citationinfo{
+      text-align: center;
+      color: rgba(0, 0, 0, 0.8);
+      font-size: 16px;
     }
   }
   .license {

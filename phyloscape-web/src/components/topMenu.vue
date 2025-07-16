@@ -15,7 +15,7 @@
       </div>
       <div class="wcenter">
         <el-menu
-          :default-active="route.meta.jumpPath"
+          :default-active="activeIndex"
           class="el-menu-demo"
           mode="horizontal"
           text-color="#fff"
@@ -28,7 +28,7 @@
           </el-menu-item>
           <el-sub-menu v-else :index="item.index">
             <template #title>{{ item.name }}</template>
-            <el-menu-item v-for="item2 in item.children" :index="item2.index" :key="item2.index">
+            <el-menu-item v-for="item2 in item.children" :index="item2.index" :key="item2.jumpPath">
               <span style="color: #555">
                 {{ item2.name }}
               </span>
@@ -99,20 +99,23 @@ import { userlogout } from "@/api/accounts";
 import { useUserInfo } from "@/store/userinfo.js";
 import { useStore } from "@/store";
 const guserinfo = useUserInfo();
-let activeIndex = ref("home");
 const router = useRouter();
 const route = useRoute();
 const store = useStore();
+let activeIndex = ref(null);
+
 const menurouter = computed(() => [
   {
     index: "docs",
     name: `${t("common.docs")}`,
     children:[
-    {
-        index: "docs/application",
+    { 
+       jumpPath: "docs",
+        index: "docs/webapp",
         name: `${t("common.docs1")}`,
       },
       {
+        jumpPath: "docs",
         index: "docs/library",
         name:  `${t("common.docs2")}`,
       },
@@ -147,7 +150,8 @@ const { t, locale } = useI18n();
 const langName = ref("English");
 const language = ref("en");
 const handleSelect = (key, keyPath) => {
-  activeIndex.value = key;
+  // console.log(key,'handle')
+  // curpath(key)
   router.push({
     path: `/${key}`,
   });
@@ -182,9 +186,7 @@ const Logout = () => {
 const goGit = () => {
   window.open("https://github.com/SciDataLab/PhyloScape");
 };
-const curpath = (path) => {
-  activeIndex.value = path.slice(1);
-};
+
 const goPersonal = (path) => {
   router.push({
     path: "/personal/data/list",
@@ -196,16 +198,6 @@ const getUserInfo = () => {
     username: localStorage.getItem("username"),
   });
 };
-watch(
-  () => route.path,
-  (val) => {
-    curpath(val);
-  }
-);
-
-activeIndex.value = computed(() => () => {
-  //计算属性传递参数
-});
 const getLangInit = () => {
   if (
     // localStorage.getItem("lang") == undefined ||
@@ -245,10 +237,26 @@ const handleSetLanguage = (lang) => {
   });
   
 };
+const curpath = (path) => {
+  const urlpath = window.location.hash.slice(1).slice(1);
+  console.log(urlpath,'urlpath')
+  console.log(path,'path')
+  if(urlpath.includes('application')){
+    activeIndex.value = 'applicationone'
+  }else{
+    activeIndex.value = path || 'home';
 
+  }
+  console.log(activeIndex.value,'activeIndex.value')
+};
+watch(
+  () => route.path,
+  (val) => {
+    curpath(router.currentRoute.value.meta.jumpPath);
+  }
+);
 onMounted(() => {
-  let path = window.location.hash.slice(1);
-  curpath(path);
+  curpath(router.currentRoute.value.meta.jumpPath);
   getLangInit();
   getUserInfo();
 });

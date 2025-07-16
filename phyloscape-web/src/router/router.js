@@ -34,12 +34,12 @@ const routes = [
       //   }
       // },
       {
-        path: 'docs/application',
+        path: 'docs/webapp',
         name: 'DocsApplication',
         component: () => import('@/views/Docs/application.vue'),
         meta: {
           title: 'Docs',
-          jumpPath: 'docs'
+          jumpPath: 'docs/library'
         }
       },
       {
@@ -48,7 +48,7 @@ const routes = [
         component: () => import('@/views/Docs/library.vue'),
         meta: {
           title: 'Docs',
-          jumpPath: 'docs'
+          jumpPath: 'docs/library'
         }
       },
       {

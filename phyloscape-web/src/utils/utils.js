@@ -294,6 +294,7 @@ export const pluginlistzh  = [
   key: "Map",
   show:true,
   template:'tdemo1',
+  license:'2-clause BSD License'
 },
 {
   id: "maptransmission",
@@ -303,6 +304,7 @@ export const pluginlistzh  = [
   key: "Map",
   show:true,
   template:'tdemo2',
+  license:'2-clause BSD License'
 },
 {
   id: "mapdensity",
@@ -312,6 +314,7 @@ export const pluginlistzh  = [
   key: "Map",
   show:true,
   template:'tdemo3',
+  license:'2-clause BSD License'
 },
 {
   id: "pienetwork",
@@ -321,6 +324,7 @@ export const pluginlistzh  = [
   key: "Diagram",
   show:true,
   template:'tdemo4',
+  license:'Common Public License v1.0'
 },
 {
   id: "freqstack",
@@ -330,6 +334,7 @@ export const pluginlistzh  = [
   key: "Diagram",
   show:true,
   template:'tdemo5',
+  license:'Common Public License v1.0'
 },
 {
   id: "groupbar",
@@ -339,6 +344,7 @@ export const pluginlistzh  = [
   key: "Diagram",
   show:true,
   template:'tdemo6',
+  license:'Common Public License v1.0'
 },
 {
   id: "acmap",
@@ -348,6 +354,7 @@ export const pluginlistzh  = [
   key: "Diagram",
   show:true,
   template:'tdemo7',
+  license:'AGPL-3.0 License'
 },
 {
   id: "headmap",
@@ -357,6 +364,7 @@ export const pluginlistzh  = [
   key: "Diagram",
   show:true,
   template:'tdemo9',
+  license:'Common Public License v1.0'
 },
 {
   id: "pdb",
@@ -366,6 +374,7 @@ export const pluginlistzh  = [
   key: "Structure",
   show:true,
   template:'tdemo8',
+  license:'Apache-2.0 license'
 },
 ];
 export const pluginlisten = [
@@ -377,6 +386,7 @@ export const pluginlisten = [
     key: "Map",
     show:true,
     template:'tdemo1',
+    license:"2-clause BSD License"
   },
   {
     id: "maptransmission",
@@ -386,6 +396,7 @@ export const pluginlisten = [
     key: "Map",
     show:true,
     template:'tdemo2',
+    license:"2-clause BSD License"
   },
   {
     id: "mapdensity",
@@ -395,6 +406,7 @@ export const pluginlisten = [
     key: "Map",
     show:true,
     template:'tdemo3',
+    license:"2-clause BSD License"
   },
   {
     id: "pienetwork",
@@ -404,6 +416,7 @@ export const pluginlisten = [
     key: "Diagram",
     show:true,
     template:'tdemo4',
+    license:"Common Public License v1.0"
   },
   {
     id: "freqstack",
@@ -413,6 +426,7 @@ export const pluginlisten = [
     key: "Diagram",
     show:true,
     template:'tdemo5',
+    license:"Common Public License v1.0"
   },
   {
     id: "groupbar",
@@ -422,6 +436,7 @@ export const pluginlisten = [
     key: "Diagram",
     show:true,
     template:'tdemo6',
+    license:"Common Public License v1.0"
   },
   {
     id: "acmap",
@@ -431,6 +446,7 @@ export const pluginlisten = [
     key: "Diagram",
     show:true,
     template:'tdemo7',
+    license:"AGPL-3.0 License"
   },
   {
     id: "headmap",
@@ -440,6 +456,7 @@ export const pluginlisten = [
     key: "Diagram",
     show:true,
     template:'tdemo9',
+    license:"Common Public License v1.0"
   },
   {
     id: "pdb",
@@ -449,6 +466,7 @@ export const pluginlisten = [
     key: "Structure",
     show:true,
     template:'tdemo8',
+    license:"Apache-2.0 license"
   },
   ];
 export const maptypeopts = [

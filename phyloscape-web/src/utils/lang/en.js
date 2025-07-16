@@ -23,13 +23,15 @@ export default {
     f4: "Tree annotation with inner node pie charts, branch colorization, leaf labels, and leaf charts (including bar charts, pie chars and binary charts).",
     f5: "Interactive visualization with extensible plugins.",
     license: "License",
-    licenseinfo:
-      'PhyloScape is released under the <a href="https://mit-license.org">MIT license</a>.',
+    licenseinfo:"The PhyloScape JavaScript library is licensed under <a target='_blank' href='https://mit-license.org'>MIT</a>, while for extension plug-ins, each of which may be licensed under different terms. ",
+    citation:"Citation",
+    citationinfo:"<i>PhyloScape: interactive and scalable visualization platform for phylogenetic trees. BMC Bioinformatics (2025). <br/><a target='_blank' href='https://doi.org/10.1186/s12859-025-06203-3'>https://doi.org/10.1186/s12859-025-06203-3</a></i>",
   },
   plugins: {
     des: "Description:",
     key: "Keyword:",
     use: "Use",
+    license: "License:",
   },
   gallery: {
     topic: "Topic",

@@ -42,6 +42,10 @@
               <span>{{ $t("plugins.key") }}</span
               ><span>{{ item.key }}</span>
             </p>
+            <p>
+              <span>{{ $t("plugins.license") }}</span
+              ><span>{{ item.license }}</span>
+            </p>
           </div>
         </div>
       </div>

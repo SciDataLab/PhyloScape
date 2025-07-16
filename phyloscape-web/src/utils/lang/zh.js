@@ -23,12 +23,15 @@ export default {
     f4: "支持内部节点饼图、分支着色、叶标签和图（柱状图、饼状图或二进制图）注释。",
     f5: "支持可扩展插件之间的互动可视化。",
     license: "协议",
-    licenseinfo: 'PhyloScape支持<a href="https://mit-license.org">MIT协议</a>',
+    citation:"引用",
+    citationinfo:"<i>PhyloScape: interactive and scalable visualization platform for phylogenetic trees. BMC Bioinformatics (2025).<br/> <a target='_blank' href='https://doi.org/10.1186/s12859-025-06203-3'>https://doi.org/10.1186/s12859-025-06203-3</a></i>",
+    licenseinfo:"PhyloScape JS库基于<a target='_blank' href='https://mit-license.org'>MIT</a>发布，扩展插件遵循各自的许可条款。",
   },
   plugins:{
     des:'描述：',
     key:'关键词：',
-    use:'使用'
+    use:'使用',
+    license:'协议：',
   },
   gallery: {
     topic: "所属专题",

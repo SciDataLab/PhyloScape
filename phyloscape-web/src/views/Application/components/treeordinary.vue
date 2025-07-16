@@ -1,42 +1,24 @@
 <template>
   <div class="treeordinarywrap">
-    <el-collapse
-      class="collapsewrap"
-      v-model="activeTreeOrdinary"
-      @change="collapseOrdinaryChange"
-      accordion
-      style="margin: 0 10px"
-    >
+    <el-collapse class="collapsewrap" v-model="activeTreeOrdinary" @change="collapseOrdinaryChange" accordion
+      style="margin: 0 10px">
       <!-- Import/Export -->
       <el-collapse-item title="Import/Export" name="11">
-        <input
-          class="ordinaryfile"
-          type="file"
-          accept=".json"
-          @change="onFileChange"
-          hidden
-        />
+        <input class="ordinaryfile" type="file" accept=".json" @change="onFileChange" hidden />
         <div class="line">
           <div class="upload-demo" style="position: relative">
-            <el-upload
-              style="flex: 1"
-              ref="baseupload"
-              action=""
-              :limit="1"
-              accept=".nwk,.nxs,.phyloxml,.nex,.phy,.tree"
-              :max-size="maxFileSize"
-              :on-exceed="handleTreeOrdinaryExceed"
-              :on-change="handleTreeOrdinaryChange"
-              :auto-upload="false"
-            >
+            <el-upload style="flex: 1" ref="baseupload" action="" :limit="1"
+              accept=".nwk,.nxs,.phyloxml,.nex,.phy,.tree" :max-size="maxFileSize" :on-exceed="handleTreeOrdinaryExceed"
+              :on-change="handleTreeOrdinaryChange" :auto-upload="false">
               {{ $t("application.treefile") }}
             </el-upload>
-            <a style=" color: red; width: 155px; font-size:10px; position: absolute; top: 0; right: 0;">.nwk,.nxs,.phyloxml,.nex,.phy,.tree</a>
+            <a
+              style=" color: red; width: 155px; font-size:10px; position: absolute; top: 0; right: 0;">.nwk,.nxs,.phyloxml,.nex,.phy,.tree</a>
           </div>
           <el-row>
             <el-col :span="12" style="text-indent: 2em">{{
               $t("application.downloadtemplate")
-            }}</el-col>
+              }}</el-col>
             <el-col :span="12">
               <a :href="ordinaryurl">
                 <el-button size="small" color="#42bec3" :icon="Download" />
@@ -59,55 +41,30 @@
             <label>layout</label>
           </el-col>
           <el-col :span="14">
-            <el-select
-              v-model="treeconfig.layout"
-              @change="handleChange({ key: 'layout' })"
-            >
-              <el-option
-                v-for="(item, index) in Layout"
-                :label="item"
-                :value="item"
-              ></el-option>
+            <el-select v-model="treeconfig.layout" @change="handleChange({ key: 'layout' })">
+              <el-option v-for="(item, index) in Layout" :label="item" :value="item"></el-option>
             </el-select>
           </el-col>
         </el-row>
         <el-row class="line">
           <el-col :span="10">Size</el-col>
           <el-col :span="7">
-            <el-input
-              clearable
-              type="number"
-              v-model="treeconfig.size[0]"
-              @change="handleChange"
-            ></el-input>
+            <el-input clearable type="number" v-model="treeconfig.size[0]" @change="handleChange"></el-input>
           </el-col>
           <el-col :span="7">
-            <el-input
-              clearable
-              type="number"
-              v-model="treeconfig.size[1]"
-              @change="handleChange"
-            ></el-input>
+            <el-input clearable type="number" v-model="treeconfig.size[1]" @change="handleChange"></el-input>
           </el-col>
         </el-row>
         <el-row class="line">
           <el-col :span="12">isPhylogram</el-col>
           <el-col :span="12">
-            <el-switch
-              active-color="#42bec3"
-              v-model="treeconfig.isPhylogram"
-              @change="handleChange"
-            />
+            <el-switch active-color="#42bec3" v-model="treeconfig.isPhylogram" @change="handleChange" />
           </el-col>
         </el-row>
         <el-row class="line">
           <el-col :span="12">isWheelZoom</el-col>
           <el-col :span="12">
-            <el-switch
-              active-color="#42bec3"
-              v-model="treeconfig.isWheelZoom"
-              @change="handleChange"
-            />
+            <el-switch active-color="#42bec3" v-model="treeconfig.isWheelZoom" @change="handleChange" />
           </el-col>
         </el-row>
         <!-- <el-row class="line">
@@ -130,12 +87,7 @@
           </el-col>
           <el-col :span="12">
             <div class="slider">
-              <el-slider
-                @change="handleChange"
-                v-model="treeconfig.scale"
-                :min="0"
-                :max="10"
-              />
+              <el-slider @change="handleChange" v-model="treeconfig.scale" :min="0" :max="10" />
               <span>{{ treeconfig.scale }}</span>
             </div>
           </el-col>
@@ -144,12 +96,7 @@
           <el-col :span="12">rotationAngle</el-col>
           <el-col :span="12">
             <div class="slider">
-              <el-slider
-                @change="handleChange"
-                v-model="treeconfig.rotationAngle"
-                :min="0"
-                :max="10"
-              />
+              <el-slider @change="handleChange" v-model="treeconfig.rotationAngle" :min="0" :max="10" />
               <span>{{ treeconfig.rotationAngle }}</span>
             </div>
           </el-col>
@@ -160,11 +107,7 @@
           </el-col>
           <el-col :span="12">
             <el-select v-model="treeconfig.sort" @change="handleChange">
-              <el-option
-                v-for="(item, index) in Sort"
-                :label="item"
-                :value="item"
-              ></el-option>
+              <el-option v-for="(item, index) in Sort" :label="item" :value="item"></el-option>
             </el-select>
           </el-col>
         </el-row>
@@ -177,33 +120,20 @@
         <el-row class="line">
           <el-col :span="12">fill</el-col>
           <el-col :span="12">
-            <el-color-picker
-              @change="handleChange"
-              show-alpha
-              v-model="treeconfig.style.fill"
-            />
+            <el-color-picker @change="handleChange" show-alpha v-model="treeconfig.style.fill" />
           </el-col>
         </el-row>
         <el-row class="line">
           <el-col :span="12">stroke</el-col>
           <el-col :span="12">
-            <el-color-picker
-              @change="handleChange"
-              show-alpha
-              v-model="treeconfig.style.stroke"
-            />
+            <el-color-picker @change="handleChange" show-alpha v-model="treeconfig.style.stroke" />
           </el-col>
         </el-row>
         <el-row class="line">
           <el-col :span="12">strokeWidth</el-col>
           <el-col :span="12">
             <div class="slider">
-              <el-slider
-                @change="handleChange"
-                v-model="treeconfig.style['stroke-width']"
-                :min="0"
-                :max="10"
-              />
+              <el-slider @change="handleChange" v-model="treeconfig.style['stroke-width']" :min="0" :max="10" />
               <span>{{ treeconfig.style["stroke-width"] }}</span>
             </div>
           </el-col>
@@ -212,12 +142,7 @@
           <el-col :span="12">fontSize</el-col>
           <el-col :span="12">
             <div class="slider">
-              <el-slider
-                @change="handleChange"
-                v-model="treeconfig.style['font-size']"
-                :min="0"
-                :max="60"
-              />
+              <el-slider @change="handleChange" v-model="treeconfig.style['font-size']" :min="0" :max="60" />
               <span>{{ treeconfig.style["font-size"] }}</span>
             </div>
           </el-col>
@@ -225,15 +150,8 @@
         <el-row class="line">
           <el-col :span="12">fontFamily</el-col>
           <el-col :span="12">
-            <el-select
-              v-model="treeconfig.style['font-family']"
-              @change="handleChange"
-            >
-              <el-option
-                v-for="item in FontFamily"
-                :label="item"
-                :value="item"
-              ></el-option>
+            <el-select v-model="treeconfig.style['font-family']" @change="handleChange">
+              <el-option v-for="item in FontFamily" :label="item" :value="item"></el-option>
             </el-select>
           </el-col>
         </el-row>
@@ -243,11 +161,7 @@
         <el-row class="line">
           <el-col :span="12">Show</el-col>
           <el-col :span="12">
-            <el-switch
-              active-color="#42bec3"
-              v-model="treeconfig.minimap.show"
-              @change="handleChange"
-            />
+            <el-switch active-color="#42bec3" v-model="treeconfig.minimap.show" @change="handleChange" />
           </el-col>
         </el-row>
         <!--  <el-row class="line">
@@ -298,11 +212,7 @@
         <el-row class="line">
           <el-col :span="12">show</el-col>
           <el-col :span="12">
-            <el-switch
-              active-color="#42bec3"
-              v-model="treeconfig.nodes.name.show"
-              @change="handleChange"
-            />
+            <el-switch active-color="#42bec3" v-model="treeconfig.nodes.name.show" @change="handleChange" />
           </el-col>
         </el-row>
         <el-row class="line">
@@ -310,15 +220,8 @@
             <label>mark</label>
           </el-col>
           <el-col :span="12">
-            <el-select
-              v-model="treeconfig.nodes.name.mark"
-              @change="handleChange"
-            >
-              <el-option
-                v-for="(item, index) in Mark"
-                :label="index"
-                :value="item"
-              ></el-option>
+            <el-select v-model="treeconfig.nodes.name.mark" @change="handleChange">
+              <el-option v-for="(item, index) in Mark" :label="index" :value="item"></el-option>
             </el-select>
           </el-col>
         </el-row>
@@ -326,12 +229,7 @@
           <el-col :span="12">dx</el-col>
           <el-col :span="12">
             <div class="slider">
-              <el-slider
-                @change="handleChange"
-                v-model="treeconfig.nodes.name.dx"
-                :min="-100"
-                :max="100"
-              />
+              <el-slider @change="handleChange" v-model="treeconfig.nodes.name.dx" :min="-100" :max="100" />
               <span>{{ treeconfig.nodes.name.dx }}</span>
             </div>
           </el-col>
@@ -340,12 +238,7 @@
           <el-col :span="12">dy</el-col>
           <el-col :span="12">
             <div class="slider">
-              <el-slider
-                @change="handleChange"
-                v-model="treeconfig.nodes.name.dy"
-                :min="-100"
-                :max="100"
-              />
+              <el-slider @change="handleChange" v-model="treeconfig.nodes.name.dy" :min="-100" :max="100" />
               <span>{{ treeconfig.nodes.name.dy }}</span>
             </div>
           </el-col>
@@ -353,22 +246,14 @@
         <el-row class="line">
           <el-col :span="12">fill</el-col>
           <el-col :span="12">
-            <el-color-picker
-              @change="handleChange"
-              v-model="treeconfig.nodes.name.style.fill"
-            />
+            <el-color-picker @change="handleChange" v-model="treeconfig.nodes.name.style.fill" />
           </el-col>
         </el-row>
         <el-row class="line">
           <el-col :span="12">fontSize</el-col>
           <el-col :span="12">
             <div class="slider">
-              <el-slider
-                @change="handleChange"
-                v-model="treeconfig.nodes.name.style['font-size']"
-                :min="0"
-                :max="60"
-              />
+              <el-slider @change="handleChange" v-model="treeconfig.nodes.name.style['font-size']" :min="0" :max="60" />
               <span>{{ treeconfig.nodes.name.style["font-size"] }}</span>
             </div>
           </el-col>
@@ -377,15 +262,8 @@
           <el-col :span="12">textAnchor</el-col>
           <el-col :span="12">
             <div class="slider">
-              <el-select
-                v-model="treeconfig.nodes.name.style['text-anchor']"
-                @change="handleChange"
-              >
-                <el-option
-                  v-for="item in textAnchor"
-                  :label="item"
-                  :value="item"
-                ></el-option>
+              <el-select v-model="treeconfig.nodes.name.style['text-anchor']" @change="handleChange">
+                <el-option v-for="item in textAnchor" :label="item" :value="item"></el-option>
               </el-select>
             </div>
           </el-col>
@@ -394,15 +272,8 @@
           <el-col :span="12">fontFamily</el-col>
           <el-col :span="12">
             <div class="slider">
-              <el-select
-                v-model="treeconfig.nodes.name.style['font-family']"
-                @change="handleChange"
-              >
-                <el-option
-                  v-for="item in FontFamily"
-                  :label="item"
-                  :value="item"
-                ></el-option>
+              <el-select v-model="treeconfig.nodes.name.style['font-family']" @change="handleChange">
+                <el-option v-for="item in FontFamily" :label="item" :value="item"></el-option>
               </el-select>
             </div>
           </el-col>
@@ -413,11 +284,7 @@
         <el-row class="line">
           <el-col :span="12">show</el-col>
           <el-col :span="12">
-            <el-switch
-              active-color="#42bec3"
-              v-model="treeconfig.nodes.value.show"
-              @change="handleChange"
-            />
+            <el-switch active-color="#42bec3" v-model="treeconfig.nodes.value.show" @change="handleChange" />
           </el-col>
         </el-row>
         <el-row class="line">
@@ -425,15 +292,8 @@
             <label>mark</label>
           </el-col>
           <el-col :span="12">
-            <el-select
-              v-model="treeconfig.nodes.value.mark"
-              @change="handleChange"
-            >
-              <el-option
-                v-for="(item, index) in Mark"
-                :label="index"
-                :value="item"
-              ></el-option>
+            <el-select v-model="treeconfig.nodes.value.mark" @change="handleChange">
+              <el-option v-for="(item, index) in Mark" :label="index" :value="item"></el-option>
             </el-select>
           </el-col>
         </el-row>
@@ -441,12 +301,7 @@
           <el-col :span="12">dx</el-col>
           <el-col :span="12">
             <div class="slider">
-              <el-slider
-                @change="handleChange"
-                v-model="treeconfig.nodes.value.dx"
-                :min="-100"
-                :max="100"
-              />
+              <el-slider @change="handleChange" v-model="treeconfig.nodes.value.dx" :min="-100" :max="100" />
               <span>{{ treeconfig.nodes.value.dx }}</span>
             </div>
           </el-col>
@@ -455,12 +310,7 @@
           <el-col :span="12">dy</el-col>
           <el-col :span="12">
             <div class="slider">
-              <el-slider
-                @change="handleChange"
-                v-model="treeconfig.nodes.value.dy"
-                :min="-100"
-                :max="100"
-              />
+              <el-slider @change="handleChange" v-model="treeconfig.nodes.value.dy" :min="-100" :max="100" />
               <span>{{ treeconfig.nodes.value.dy }}</span>
             </div>
           </el-col>
@@ -468,22 +318,15 @@
         <el-row class="line">
           <el-col :span="12">fill</el-col>
           <el-col :span="12">
-            <el-color-picker
-              @change="handleChange"
-              v-model="treeconfig.nodes.value.style.fill"
-            />
+            <el-color-picker @change="handleChange" v-model="treeconfig.nodes.value.style.fill" />
           </el-col>
         </el-row>
         <el-row class="line">
           <el-col :span="12">fontSize</el-col>
           <el-col :span="12">
             <div class="slider">
-              <el-slider
-                @change="handleChange"
-                v-model="treeconfig.nodes.value.style['font-size']"
-                :min="0"
-                :max="60"
-              />
+              <el-slider @change="handleChange" v-model="treeconfig.nodes.value.style['font-size']" :min="0"
+                :max="60" />
               <span>{{ treeconfig.nodes.value.style["font-size"] }}</span>
             </div>
           </el-col>
@@ -492,15 +335,8 @@
           <el-col :span="12">textAnchor</el-col>
           <el-col :span="12">
             <div class="slider">
-              <el-select
-                v-model="treeconfig.nodes.value.style['text-anchor']"
-                @change="handleChange"
-              >
-                <el-option
-                  v-for="item in textAnchor"
-                  :label="item"
-                  :value="item"
-                ></el-option>
+              <el-select v-model="treeconfig.nodes.value.style['text-anchor']" @change="handleChange">
+                <el-option v-for="item in textAnchor" :label="item" :value="item"></el-option>
               </el-select>
             </div>
           </el-col>
@@ -509,15 +345,8 @@
           <el-col :span="12">fontFamily</el-col>
           <el-col :span="12">
             <div class="slider">
-              <el-select
-                v-model="treeconfig.nodes.value.style['font-family']"
-                @change="handleChange"
-              >
-                <el-option
-                  v-for="item in FontFamily"
-                  :label="item"
-                  :value="item"
-                ></el-option>
+              <el-select v-model="treeconfig.nodes.value.style['font-family']" @change="handleChange">
+                <el-option v-for="item in FontFamily" :label="item" :value="item"></el-option>
               </el-select>
             </div>
           </el-col>
@@ -529,28 +358,19 @@
           <el-row>
             <el-col :span="12">symbol</el-col>
             <el-col :span="12">
-              <el-upload
-                style="display: inline-block; padding-right: 5px"
-                ref="symbolupload"
-                class="upload-demo"
-                action=""
-                :limit="1"
-                accept=".csv"
-                :max-size="maxFileSize"
-                :on-exceed="handleSymbolExceed"
-                :on-change="handleSymbolChange"
-                :auto-upload="false"
-              >
+              <el-upload style="display: inline-block; padding-right: 5px" ref="symbolupload" class="upload-demo"
+                action="" :limit="1" accept=".csv" :max-size="maxFileSize" :on-exceed="handleSymbolExceed"
+                :on-change="handleSymbolChange" :auto-upload="false">
                 <el-button color="#42bec3">{{
                   $t("application.uploaddata")
-                }}</el-button>
+                  }}</el-button>
               </el-upload>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="12" style="text-indent: 2em">{{
               $t("application.downloadtemplate")
-            }}</el-col>
+              }}</el-col>
             <!-- <el-col :span="6">
               <a :href="symbolurl1">
                 <el-tooltip content="detailed" placement="bottom" effect="light">
@@ -567,9 +387,7 @@
             </el-col> -->
             <el-col :span="12">
               <a :href="symbolurl2">
-                <el-button size="small" color="#42bec345" style="color: black"
-                  >simple</el-button
-                >
+                <el-button size="small" color="#42bec345" style="color: black">simple</el-button>
               </a>
               <a :href="symbolurl1">
                 <el-button size="small" color="#42bec3">detailed</el-button>
@@ -580,11 +398,7 @@
         <el-row class="line">
           <el-col :span="12">show</el-col>
           <el-col :span="12">
-            <el-switch
-              active-color="#42bec3"
-              v-model="treeconfig.nodes.symbol.show"
-              @change="handleChange"
-            />
+            <el-switch active-color="#42bec3" v-model="treeconfig.nodes.symbol.show" @change="handleChange" />
           </el-col>
         </el-row>
         <el-row class="line">
@@ -592,15 +406,8 @@
             <label>type</label>
           </el-col>
           <el-col :span="12">
-            <el-select
-              v-model="treeconfig.nodes.symbol.type"
-              @change="handleChange"
-            >
-              <el-option
-                v-for="(item, index) in symbolTypeObj"
-                :label="index"
-                :value="index"
-              ></el-option>
+            <el-select v-model="treeconfig.nodes.symbol.type" @change="handleChange">
+              <el-option v-for="(item, index) in symbolTypeObj" :label="index" :value="index"></el-option>
             </el-select>
           </el-col>
         </el-row>
@@ -609,15 +416,8 @@
             <label>mark</label>
           </el-col>
           <el-col :span="12">
-            <el-select
-              v-model="treeconfig.nodes.symbol.mark"
-              @change="handleChange"
-            >
-              <el-option
-                v-for="(item, index) in Mark"
-                :label="index"
-                :value="item"
-              ></el-option>
+            <el-select v-model="treeconfig.nodes.symbol.mark" @change="handleChange">
+              <el-option v-for="(item, index) in Mark" :label="index" :value="item"></el-option>
             </el-select>
           </el-col>
         </el-row>
@@ -625,12 +425,7 @@
           <el-col :span="12">dx</el-col>
           <el-col :span="12">
             <div class="slider">
-              <el-slider
-                @change="handleChange"
-                v-model="treeconfig.nodes.symbol.dx"
-                :min="-100"
-                :max="100"
-              />
+              <el-slider @change="handleChange" v-model="treeconfig.nodes.symbol.dx" :min="-100" :max="100" />
               <span>{{ treeconfig.nodes.symbol.dx }}</span>
             </div>
           </el-col>
@@ -639,12 +434,7 @@
           <el-col :span="12">dy</el-col>
           <el-col :span="12">
             <div class="slider">
-              <el-slider
-                @change="handleChange"
-                v-model="treeconfig.nodes.symbol.dy"
-                :min="-100"
-                :max="100"
-              />
+              <el-slider @change="handleChange" v-model="treeconfig.nodes.symbol.dy" :min="-100" :max="100" />
               <span>{{ treeconfig.nodes.symbol.dy }}</span>
             </div>
           </el-col>
@@ -653,12 +443,7 @@
           <el-col :span="12">innerRadius</el-col>
           <el-col :span="12">
             <div class="slider">
-              <el-slider
-                @change="handleChange"
-                v-model="treeconfig.nodes.symbol.innerRadius"
-                :min="0"
-                :max="30"
-              />
+              <el-slider @change="handleChange" v-model="treeconfig.nodes.symbol.innerRadius" :min="0" :max="30" />
               <span>{{ treeconfig.nodes.symbol.innerRadius }}</span>
             </div>
           </el-col>
@@ -667,12 +452,7 @@
           <el-col :span="12">outerRadius</el-col>
           <el-col :span="12">
             <div class="slider">
-              <el-slider
-                @change="handleChange"
-                v-model="treeconfig.nodes.symbol.outerRadius"
-                :min="0"
-                :max="30"
-              />
+              <el-slider @change="handleChange" v-model="treeconfig.nodes.symbol.outerRadius" :min="0" :max="30" />
               <span>{{ treeconfig.nodes.symbol.outerRadius }}</span>
             </div>
           </el-col>
@@ -681,12 +461,7 @@
           <el-col :span="12">size</el-col>
           <el-col :span="12">
             <div class="slider">
-              <el-slider
-                @change="handleChange"
-                v-model="treeconfig.nodes.symbol.size"
-                :min="0"
-                :max="30"
-              />
+              <el-slider @change="handleChange" v-model="treeconfig.nodes.symbol.size" :min="0" :max="30" />
               <span>{{ treeconfig.nodes.symbol.size }}</span>
             </div>
           </el-col>
@@ -695,12 +470,7 @@
           <el-col :span="12">distance</el-col>
           <el-col :span="12">
             <div class="slider">
-              <el-slider
-                @change="handleChange"
-                v-model="treeconfig.nodes.symbol.distance"
-                :min="0"
-                :max="20"
-              />
+              <el-slider @change="handleChange" v-model="treeconfig.nodes.symbol.distance" :min="0" :max="20" />
               <span>{{ treeconfig.nodes.symbol.distance }}</span>
             </div>
           </el-col>
@@ -709,13 +479,8 @@
           <el-col :span="12">maxLength</el-col>
           <el-col :span="12">
             <div class="slider">
-              <el-slider
-                @change="handleChange"
-                v-model="treeconfig.nodes.symbol.maxLength"
-                :min="0"
-                :max="10"
-                :step="0.01"
-              />
+              <el-slider @change="handleChange" v-model="treeconfig.nodes.symbol.maxLength" :min="0" :max="10"
+                :step="0.01" />
               <span>{{ treeconfig.nodes.symbol.maxLength }}</span>
             </div>
           </el-col>
@@ -723,32 +488,21 @@
         <el-row class="line">
           <el-col :span="12">fill</el-col>
           <el-col :span="12">
-            <el-color-picker
-              @change="handleChange"
-              v-model="treeconfig.nodes.symbol.style.fill"
-            />
+            <el-color-picker @change="handleChange" v-model="treeconfig.nodes.symbol.style.fill" />
           </el-col>
         </el-row>
         <el-row class="line">
           <el-col :span="12">stroke</el-col>
           <el-col :span="12">
-            <el-color-picker
-              @change="handleChange"
-              v-model="treeconfig.nodes.symbol.style.stroke"
-            />
+            <el-color-picker @change="handleChange" v-model="treeconfig.nodes.symbol.style.stroke" />
           </el-col>
         </el-row>
         <el-row class="line">
           <el-col :span="12">strokeWidth</el-col>
           <el-col :span="12">
             <div class="slider">
-              <el-slider
-                @change="handleChange"
-                v-model="treeconfig.nodes.symbol.style['stroke-width']"
-                :min="0"
-                :max="10"
-                :step="0.01"
-              />
+              <el-slider @change="handleChange" v-model="treeconfig.nodes.symbol.style['stroke-width']" :min="0"
+                :max="10" :step="0.01" />
               <span>{{ treeconfig.nodes.symbol.style["stroke-width"] }}</span>
             </div>
           </el-col>
@@ -757,13 +511,8 @@
           <el-col :span="12">strokeOpacity</el-col>
           <el-col :span="12">
             <div class="slider">
-              <el-slider
-                @change="handleChange"
-                v-model="treeconfig.nodes.symbol.style['stroke-opacity']"
-                :min="0"
-                :max="1"
-                :step="0.01"
-              />
+              <el-slider @change="handleChange" v-model="treeconfig.nodes.symbol.style['stroke-opacity']" :min="0"
+                :max="1" :step="0.01" />
               <span>{{ treeconfig.nodes.symbol.style["stroke-opacity"] }}</span>
             </div>
           </el-col>
@@ -775,28 +524,19 @@
           <el-row>
             <el-col :span="12">leaf</el-col>
             <el-col :span="12">
-              <el-upload
-                style="display: inline-block; padding-right: 5px"
-                ref="leafupload"
-                class="upload-demo"
-                action=""
-                :limit="1"
-                accept=".csv"
-                :max-size="maxFileSize"
-                :on-exceed="handleLeafExceed"
-                :on-change="handleLeafChange"
-                :auto-upload="false"
-              >
+              <el-upload style="display: inline-block; padding-right: 5px" ref="leafupload" class="upload-demo"
+                action="" :limit="1" accept=".csv" :max-size="maxFileSize" :on-exceed="handleLeafExceed"
+                :on-change="handleLeafChange" :auto-upload="false">
                 <el-button color="#42bec3">{{
                   $t("application.uploaddata")
-                }}</el-button>
+                  }}</el-button>
               </el-upload>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="12" style="text-indent: 2em">{{
               $t("application.downloadtemplate")
-            }}</el-col>
+              }}</el-col>
             <!-- <el-col :span="6">
               <a :href="leafurl1">
                 <el-button size="small" color="#42bec3" :icon="Download" />
@@ -809,9 +549,7 @@
             </el-col> -->
             <el-col :span="12">
               <a :href="leafurl2">
-                <el-button size="small" color="#42bec345" style="color: black"
-                  >simple</el-button
-                >
+                <el-button size="small" color="#42bec345" style="color: black">simple</el-button>
               </a>
               <a :href="leafurl1">
                 <el-button size="small" color="#42bec3">detailed</el-button>
@@ -822,23 +560,14 @@
         <el-row class="line">
           <el-col :span="12">show</el-col>
           <el-col :span="12">
-            <el-switch
-              active-color="#42bec3"
-              v-model="treeconfig.leafs.show"
-              @change="handleChange"
-            />
+            <el-switch active-color="#42bec3" v-model="treeconfig.leafs.show" @change="handleChange" />
           </el-col>
         </el-row>
         <el-row class="line">
           <el-col :span="12">dx</el-col>
           <el-col :span="12">
             <div class="slider">
-              <el-slider
-                @change="handleChange"
-                v-model="treeconfig.leafs.dx"
-                :min="-100"
-                :max="100"
-              />
+              <el-slider @change="handleChange" v-model="treeconfig.leafs.dx" :min="-100" :max="100" />
               <span>{{ treeconfig.leafs.dx }}</span>
             </div>
           </el-col>
@@ -847,12 +576,7 @@
           <el-col :span="12">dy</el-col>
           <el-col :span="12">
             <div class="slider">
-              <el-slider
-                @change="handleChange"
-                v-model="treeconfig.leafs.dy"
-                :min="-100"
-                :max="100"
-              />
+              <el-slider @change="handleChange" v-model="treeconfig.leafs.dy" :min="-100" :max="100" />
               <span>{{ treeconfig.leafs.dy }}</span>
             </div>
           </el-col>
@@ -861,12 +585,7 @@
           <el-col :span="12">distance</el-col>
           <el-col :span="12">
             <div class="slider">
-              <el-slider
-                @change="handleChange"
-                v-model="treeconfig.leafs.distance"
-                :min="0"
-                :max="20"
-              />
+              <el-slider @change="handleChange" v-model="treeconfig.leafs.distance" :min="0" :max="20" />
               <span>{{ treeconfig.leafs.distance }}</span>
             </div>
           </el-col>
@@ -874,22 +593,14 @@
         <el-row class="line">
           <el-col :span="12">fill</el-col>
           <el-col :span="12">
-            <el-color-picker
-              @change="handleChange"
-              v-model="treeconfig.leafs.style.fill"
-            />
+            <el-color-picker @change="handleChange" v-model="treeconfig.leafs.style.fill" />
           </el-col>
         </el-row>
         <el-row class="line">
           <el-col :span="12">fontSize</el-col>
           <el-col :span="12">
             <div class="slider">
-              <el-slider
-                @change="handleChange"
-                v-model="treeconfig.leafs.style['font-size']"
-                :min="0"
-                :max="60"
-              />
+              <el-slider @change="handleChange" v-model="treeconfig.leafs.style['font-size']" :min="0" :max="60" />
               <span>{{ treeconfig.leafs.style["font-size"] }}</span>
             </div>
           </el-col>
@@ -898,13 +609,8 @@
           <el-col :span="12">opacity</el-col>
           <el-col :span="12">
             <div class="slider">
-              <el-slider
-                @change="handleChange"
-                v-model="treeconfig.leafs.style.opacity"
-                :min="0"
-                :max="1"
-                :step="0.01"
-              />
+              <el-slider @change="handleChange" v-model="treeconfig.leafs.style.opacity" :min="0" :max="1"
+                :step="0.01" />
               <span>{{ treeconfig.leafs.style.opacity }}</span>
             </div>
           </el-col>
@@ -912,15 +618,8 @@
         <el-row class="line">
           <el-col :span="12">fontFamily</el-col>
           <el-col :span="12">
-            <el-select
-              v-model="treeconfig.leafs.style['font-family']"
-              @change="handleChange"
-            >
-              <el-option
-                v-for="item in FontFamily"
-                :label="item"
-                :value="item"
-              ></el-option>
+            <el-select v-model="treeconfig.leafs.style['font-family']" @change="handleChange">
+              <el-option v-for="item in FontFamily" :label="item" :value="item"></el-option>
             </el-select>
           </el-col>
         </el-row>
@@ -931,28 +630,19 @@
           <el-row>
             <el-col :span="12">mask</el-col>
             <el-col :span="12">
-              <el-upload
-                style="display: inline-block; padding-right: 5px"
-                ref="maskupload"
-                class="upload-demo"
-                action=""
-                :limit="1"
-                accept=".csv"
-                :max-size="maxFileSize"
-                :on-exceed="handleMaskExceed"
-                :on-change="handleMaskChange"
-                :auto-upload="false"
-              >
+              <el-upload style="display: inline-block; padding-right: 5px" ref="maskupload" class="upload-demo"
+                action="" :limit="1" accept=".csv" :max-size="maxFileSize" :on-exceed="handleMaskExceed"
+                :on-change="handleMaskChange" :auto-upload="false">
                 <el-button color="#42bec3">{{
                   $t("application.uploaddata")
-                }}</el-button>
+                  }}</el-button>
               </el-upload>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="12" style="text-indent: 2em">{{
               $t("application.downloadtemplate")
-            }}</el-col>
+              }}</el-col>
             <!-- <el-col :span="6">
               <a :href="maskurl1">
                 <el-button size="small" color="#42bec3" :icon="Download" />
@@ -965,9 +655,7 @@
             </el-col> -->
             <el-col :span="12">
               <a :href="maskurl2">
-                <el-button size="small" color="#42bec345" style="color: black"
-                  >simple</el-button
-                >
+                <el-button size="small" color="#42bec345" style="color: black">simple</el-button>
               </a>
               <a :href="maskurl1">
                 <el-button size="small" color="#42bec3">detailed</el-button>
@@ -978,23 +666,14 @@
         <el-row class="line">
           <el-col :span="12">show</el-col>
           <el-col :span="12">
-            <el-switch
-              active-color="#42bec3"
-              v-model="treeconfig.mask.show"
-              @change="handleChange"
-            />
+            <el-switch active-color="#42bec3" v-model="treeconfig.mask.show" @change="handleChange" />
           </el-col>
         </el-row>
         <el-row class="line">
           <el-col :span="12">dx</el-col>
           <el-col :span="12">
             <div class="slider">
-              <el-slider
-                @change="handleChange"
-                v-model="treeconfig.mask.dx"
-                :min="-100"
-                :max="100"
-              />
+              <el-slider @change="handleChange" v-model="treeconfig.mask.dx" :min="-100" :max="100" />
               <span>{{ treeconfig.mask.dx }}</span>
             </div>
           </el-col>
@@ -1003,12 +682,7 @@
           <el-col :span="12">dy</el-col>
           <el-col :span="12">
             <div class="slider">
-              <el-slider
-                @change="handleChange"
-                v-model="treeconfig.mask.dy"
-                :min="-100"
-                :max="100"
-              />
+              <el-slider @change="handleChange" v-model="treeconfig.mask.dy" :min="-100" :max="100" />
               <span>{{ treeconfig.mask.dy }}</span>
             </div>
           </el-col>
@@ -1016,60 +690,39 @@
         <el-row class="line">
           <el-col :span="12">isAnnulus</el-col>
           <el-col :span="12">
-            <el-switch
-              active-color="#42bec3"
-              v-model="treeconfig.mask.isAnnulus"
-              @change="handleChange"
-            />
+            <el-switch active-color="#42bec3" v-model="treeconfig.mask.isAnnulus" @change="handleChange" />
           </el-col>
         </el-row>
         <el-row class="line">
           <el-col :span="12">opacity</el-col>
           <el-col :span="12">
             <div class="slider">
-              <el-slider
-                @change="handleChange"
-                v-model="treeconfig.mask.style.opacity"
-                :min="0"
-                :max="1"
-                :step="0.01"
-              />
+              <el-slider @change="handleChange" v-model="treeconfig.mask.style.opacity" :min="0" :max="1"
+                :step="0.01" />
               <span>{{ treeconfig.mask.style.opacity }}</span>
             </div>
           </el-col>
         </el-row>
       </el-collapse-item>
       <!-- 6.元数据配置 -->
-      <el-collapse-item
-        :title="$t('application.ometadataconfiguration')"
-        name="20"
-      >
+      <el-collapse-item :title="$t('application.ometadataconfiguration')" name="20">
         <div class="line">
           <el-row>
             <el-col :span="12">metadata</el-col>
             <el-col :span="12">
-              <el-upload
-                style="display: inline-block; padding-right: 5px"
-                ref="metadataupload"
-                class="upload-demo"
-                action=""
-                :limit="1"
-                accept=".csv"
-                :max-size="maxFileSize"
-                :on-exceed="handleMetadataExceed"
-                :on-change="handleMetadataChange"
-                :auto-upload="false"
-              >
+              <el-upload style="display: inline-block; padding-right: 5px" ref="metadataupload" class="upload-demo"
+                action="" :limit="1" accept=".csv" :max-size="maxFileSize" :on-exceed="handleMetadataExceed"
+                :on-change="handleMetadataChange" :auto-upload="false">
                 <el-button color="#42bec3">{{
                   $t("application.uploaddata")
-                }}</el-button>
+                  }}</el-button>
               </el-upload>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="12" style="text-indent: 2em">{{
               $t("application.downloadtemplate")
-            }}</el-col>
+              }}</el-col>
             <!-- <el-col :span="6">
               <a :href="metadataurl1">
                 <el-tooltip content="detailed" placement="bottom" effect="light">
@@ -1086,9 +739,7 @@
             </el-col> -->
             <el-col :span="12">
               <a :href="metadataurl2">
-                <el-button size="small" color="#42bec345" style="color: black"
-                  >simple</el-button
-                >
+                <el-button size="small" color="#42bec345" style="color: black">simple</el-button>
               </a>
               <a :href="metadataurl1">
                 <el-button size="small" color="#42bec3">detailed</el-button>
@@ -1099,23 +750,21 @@
         <el-row class="line">
           <el-col :span="12">show</el-col>
           <el-col :span="12">
-            <el-switch
-              active-color="#42bec3"
-              v-model="treeconfig.sign.show"
-              @change="handleChange"
-            />
+            <el-switch active-color="#42bec3" v-model="treeconfig.sign.show" @change="handleChange" />
+          </el-col>
+        </el-row>
+        <el-row class="line">
+          <el-col :span="12">header show</el-col>
+          <el-col :span="12">
+            <el-switch active-color="#42bec3" v-model="treeconfig.sign.headershow"
+              @change="handleChange({ key: 'headershow' })" />
           </el-col>
         </el-row>
         <el-row class="line">
           <el-col :span="12">dx</el-col>
           <el-col :span="12">
             <div class="slider">
-              <el-slider
-                @change="handleChange"
-                v-model="treeconfig.sign.dx"
-                :min="-100"
-                :max="100"
-              />
+              <el-slider @change="handleChange" v-model="treeconfig.sign.dx" :min="-100" :max="100" />
               <span>{{ treeconfig.sign.dx }}</span>
             </div>
           </el-col>
@@ -1124,12 +773,7 @@
           <el-col :span="12">dy</el-col>
           <el-col :span="12">
             <div class="slider">
-              <el-slider
-                @change="handleChange"
-                v-model="treeconfig.sign.dy"
-                :min="-100"
-                :max="100"
-              />
+              <el-slider @change="handleChange" v-model="treeconfig.sign.dy" :min="-100" :max="100" />
               <span>{{ treeconfig.sign.dy }}</span>
             </div>
           </el-col>
@@ -1138,12 +782,7 @@
           <el-col :span="12">distance</el-col>
           <el-col :span="12">
             <div class="slider">
-              <el-slider
-                @change="handleChange"
-                v-model="treeconfig.sign.distance"
-                :min="0"
-                :max="20"
-              />
+              <el-slider @change="handleChange" v-model="treeconfig.sign.distance" :min="0" :max="20" />
               <span>{{ treeconfig.sign.distance }}</span>
             </div>
           </el-col>
@@ -1152,48 +791,31 @@
           <el-col :span="12">ringMargin</el-col>
           <el-col :span="12">
             <div class="slider">
-              <el-slider
-                @change="handleChange"
-                v-model="treeconfig.sign.ringMargin"
-                :min="0"
-                :max="20"
-              />
+              <el-slider @change="handleChange" v-model="treeconfig.sign.ringMargin" :min="0" :max="20" />
               <span>{{ treeconfig.sign.ringMargin }}</span>
             </div>
           </el-col>
         </el-row>
       </el-collapse-item>
       <!-- 7.提示浮框配置 -->
-      <el-collapse-item
-        :title="$t('application.otooltipconfiguration')"
-        name="21"
-      >
+      <el-collapse-item :title="$t('application.otooltipconfiguration')" name="21">
         <div class="line">
           <el-row>
             <el-col :span="12">tooltip</el-col>
             <el-col :span="12">
-              <el-upload
-                style="display: inline-block; padding-right: 5px"
-                ref="tooltipupload"
-                class="upload-demo"
-                action=""
-                :limit="1"
-                accept=".csv"
-                :max-size="maxFileSize"
-                :on-exceed="handleTooltipExceed"
-                :on-change="handleTooltipChange"
-                :auto-upload="false"
-              >
+              <el-upload style="display: inline-block; padding-right: 5px" ref="tooltipupload" class="upload-demo"
+                action="" :limit="1" accept=".csv" :max-size="maxFileSize" :on-exceed="handleTooltipExceed"
+                :on-change="handleTooltipChange" :auto-upload="false">
                 <el-button color="#42bec3">{{
                   $t("application.uploaddata")
-                }}</el-button>
+                  }}</el-button>
               </el-upload>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="12" style="text-indent: 2em">{{
               $t("application.downloadtemplate")
-            }}</el-col>
+              }}</el-col>
             <el-col :span="12">
               <a :href="tooltipurl">
                 <el-button size="small" color="#42bec3" :icon="Download" />
@@ -1204,11 +826,7 @@
         <el-row class="line">
           <el-col :span="12">show</el-col>
           <el-col :span="12">
-            <el-switch
-              active-color="#42bec3"
-              v-model="treeconfig.tooltip.show"
-              @change="handleChange"
-            />
+            <el-switch active-color="#42bec3" v-model="treeconfig.tooltip.show" @change="handleChange" />
           </el-col>
         </el-row>
       </el-collapse-item>
@@ -1217,32 +835,21 @@
         <el-row class="line">
           <el-col :span="12">fill</el-col>
           <el-col :span="12">
-            <el-color-picker
-              @change="handleChange"
-              v-model="treeconfig.links.style.fill"
-            />
+            <el-color-picker @change="handleChange" v-model="treeconfig.links.style.fill" />
           </el-col>
         </el-row>
         <el-row class="line">
           <el-col :span="12">stroke</el-col>
           <el-col :span="12">
-            <el-color-picker
-              @change="handleChange"
-              v-model="treeconfig.links.style.stroke"
-            />
+            <el-color-picker @change="handleChange" v-model="treeconfig.links.style.stroke" />
           </el-col>
         </el-row>
         <el-row class="line">
           <el-col :span="12">strokeWidth</el-col>
           <el-col :span="12">
             <div class="slider">
-              <el-slider
-                @change="handleChange"
-                v-model="treeconfig.links.style['stroke-width']"
-                :min="0"
-                :max="10"
-                :step="0.01"
-              />
+              <el-slider @change="handleChange" v-model="treeconfig.links.style['stroke-width']" :min="0" :max="10"
+                :step="0.01" />
               <span>{{ treeconfig.links.style["stroke-width"] }}</span>
             </div>
           </el-col>
@@ -1251,13 +858,8 @@
           <el-col :span="12">strokeOpacity</el-col>
           <el-col :span="12">
             <div class="slider">
-              <el-slider
-                @change="handleChange"
-                v-model="treeconfig.links.style['stroke-opacity']"
-                :min="0"
-                :max="1"
-                :step="0.01"
-              />
+              <el-slider @change="handleChange" v-model="treeconfig.links.style['stroke-opacity']" :min="0" :max="1"
+                :step="0.01" />
               <span>{{ treeconfig.links.style["stroke-opacity"] }}</span>
             </div>
           </el-col>
@@ -1268,41 +870,27 @@
         <el-row class="line">
           <el-col :span="12">show</el-col>
           <el-col :span="12">
-            <el-switch
-              active-color="#42bec3"
-              v-model="treeconfig.extension.show"
-              @change="handleChange"
-            />
+            <el-switch active-color="#42bec3" v-model="treeconfig.extension.show" @change="handleChange" />
           </el-col>
         </el-row>
         <el-row class="line">
           <el-col :span="12">fill</el-col>
           <el-col :span="12">
-            <el-color-picker
-              @change="handleChange"
-              v-model="treeconfig.extension.style.fill"
-            />
+            <el-color-picker @change="handleChange" v-model="treeconfig.extension.style.fill" />
           </el-col>
         </el-row>
         <el-row class="line">
           <el-col :span="12">stroke</el-col>
           <el-col :span="12">
-            <el-color-picker
-              @change="handleChange"
-              v-model="treeconfig.extension.style.stroke"
-            />
+            <el-color-picker @change="handleChange" v-model="treeconfig.extension.style.stroke" />
           </el-col>
         </el-row>
         <el-row class="line">
           <el-col :span="12">strokeDasharray</el-col>
           <el-col :span="12">
             <div class="slider">
-              <el-slider
-                @change="handleChange"
-                v-model="treeconfig.extension.style['stroke-dasharray']"
-                :min="0"
-                :max="10"
-              />
+              <el-slider @change="handleChange" v-model="treeconfig.extension.style['stroke-dasharray']" :min="0"
+                :max="10" />
               <span>{{ treeconfig.extension.style["stroke-dasharray"] }}</span>
             </div>
           </el-col>
@@ -1311,13 +899,8 @@
           <el-col :span="12">strokeWidth</el-col>
           <el-col :span="12">
             <div class="slider">
-              <el-slider
-                @change="handleChange"
-                v-model="treeconfig.extension.style['stroke-width']"
-                :min="0"
-                :max="10"
-                :step="0.01"
-              />
+              <el-slider @change="handleChange" v-model="treeconfig.extension.style['stroke-width']" :min="0" :max="10"
+                :step="0.01" />
               <span>{{ treeconfig.extension.style["stroke-width"] }}</span>
             </div>
           </el-col>
@@ -1326,13 +909,8 @@
           <el-col :span="12">strokeOpacity</el-col>
           <el-col :span="12">
             <div class="slider">
-              <el-slider
-                @change="handleChange"
-                v-model="treeconfig.extension.style['stroke-opacity']"
-                :min="0"
-                :max="1"
-                :step="0.01"
-              />
+              <el-slider @change="handleChange" v-model="treeconfig.extension.style['stroke-opacity']" :min="0" :max="1"
+                :step="0.01" />
               <span>{{ treeconfig.extension.style["stroke-opacity"] }}</span>
             </div>
           </el-col>
@@ -1346,23 +924,14 @@
         <el-row class="line">
           <el-col :span="12">show</el-col>
           <el-col :span="12">
-            <el-switch
-              active-color="#42bec3"
-              v-model="treeconfig.collapse.show"
-              @change="handleChange"
-            />
+            <el-switch active-color="#42bec3" v-model="treeconfig.collapse.show" @change="handleChange" />
           </el-col>
         </el-row>
         <el-row class="line">
           <el-col :span="12">dx</el-col>
           <el-col :span="12">
             <div class="slider">
-              <el-slider
-                @change="handleChange"
-                v-model="treeconfig.collapse.dx"
-                :min="-100"
-                :max="100"
-              />
+              <el-slider @change="handleChange" v-model="treeconfig.collapse.dx" :min="-100" :max="100" />
               <span>{{ treeconfig.collapse.dx }}</span>
             </div>
           </el-col>
@@ -1371,12 +940,7 @@
           <el-col :span="12">dy</el-col>
           <el-col :span="12">
             <div class="slider">
-              <el-slider
-                @change="handleChange"
-                v-model="treeconfig.collapse.dy"
-                :min="-100"
-                :max="100"
-              />
+              <el-slider @change="handleChange" v-model="treeconfig.collapse.dy" :min="-100" :max="100" />
               <span>{{ treeconfig.collapse.dy }}</span>
             </div>
           </el-col>
@@ -1385,12 +949,7 @@
           <el-col :span="12">rotate</el-col>
           <el-col :span="12">
             <div class="slider">
-              <el-slider
-                @change="handleChange"
-                v-model="treeconfig.collapse.rotate"
-                :min="0"
-                :max="360"
-              />
+              <el-slider @change="handleChange" v-model="treeconfig.collapse.rotate" :min="0" :max="360" />
               <span>{{ treeconfig.collapse.rotate }}</span>
             </div>
           </el-col>
@@ -1399,12 +958,7 @@
           <el-col :span="12">width</el-col>
           <el-col :span="12">
             <div class="slider">
-              <el-slider
-                @change="handleChange"
-                v-model="treeconfig.collapse.size[0]"
-                :min="0"
-                :max="360"
-              />
+              <el-slider @change="handleChange" v-model="treeconfig.collapse.size[0]" :min="0" :max="360" />
               <span>{{ treeconfig.collapse.size[0] }}</span>
             </div>
           </el-col>
@@ -1413,12 +967,7 @@
           <el-col :span="12">height</el-col>
           <el-col :span="12">
             <div class="slider">
-              <el-slider
-                @change="handleChange"
-                v-model="treeconfig.collapse.size[1]"
-                :min="0"
-                :max="360"
-              />
+              <el-slider @change="handleChange" v-model="treeconfig.collapse.size[1]" :min="0" :max="360" />
               <span>{{ treeconfig.collapse.size[1] }}</span>
             </div>
           </el-col>
@@ -1432,32 +981,21 @@
             <el-row class="line2">
               <el-col :span="12">fill</el-col>
               <el-col :span="12">
-                <el-color-picker
-                  @change="handleChange"
-                  v-model="treeconfig.collapse.style.fill"
-                />
+                <el-color-picker @change="handleChange" v-model="treeconfig.collapse.style.fill" />
               </el-col>
             </el-row>
             <el-row class="line2">
               <el-col :span="12">stroke</el-col>
               <el-col :span="12">
-                <el-color-picker
-                  @change="handleChange"
-                  v-model="treeconfig.collapse.style.stroke"
-                />
+                <el-color-picker @change="handleChange" v-model="treeconfig.collapse.style.stroke" />
               </el-col>
             </el-row>
             <el-row class="line2">
               <el-col :span="12">opacity</el-col>
               <el-col :span="12">
                 <div class="slider">
-                  <el-slider
-                    @change="handleChange"
-                    v-model="treeconfig.collapse.style.opacity"
-                    :min="0"
-                    :max="1"
-                    :step="0.01"
-                  />
+                  <el-slider @change="handleChange" v-model="treeconfig.collapse.style.opacity" :min="0" :max="1"
+                    :step="0.01" />
                   <span>{{ treeconfig.collapse.style.opacity }}</span>
                 </div>
               </el-col>
@@ -1466,15 +1004,11 @@
               <el-col :span="12">strokeDasharray</el-col>
               <el-col :span="12">
                 <div class="slider">
-                  <el-slider
-                    @change="handleChange"
-                    v-model="treeconfig.collapse.style['stroke-dasharray']"
-                    :min="0"
-                    :max="10"
-                  />
+                  <el-slider @change="handleChange" v-model="treeconfig.collapse.style['stroke-dasharray']" :min="0"
+                    :max="10" />
                   <span>{{
                     treeconfig.collapse.style["stroke-dasharray"]
-                  }}</span>
+                    }}</span>
                 </div>
               </el-col>
             </el-row>
@@ -1482,13 +1016,8 @@
               <el-col :span="12">strokeWidth</el-col>
               <el-col :span="12">
                 <div class="slider">
-                  <el-slider
-                    @change="handleChange"
-                    v-model="treeconfig.collapse.style['stroke-width']"
-                    :min="0"
-                    :max="10"
-                    :step="0.01"
-                  />
+                  <el-slider @change="handleChange" v-model="treeconfig.collapse.style['stroke-width']" :min="0"
+                    :max="10" :step="0.01" />
                   <span>{{ treeconfig.collapse.style["stroke-width"] }}</span>
                 </div>
               </el-col>
@@ -1497,13 +1026,8 @@
               <el-col :span="12">strokeOacity</el-col>
               <el-col :span="12">
                 <div class="slider">
-                  <el-slider
-                    @change="handleChange"
-                    v-model="treeconfig.collapse.style['stroke-opacity']"
-                    :min="0"
-                    :max="1"
-                    :step="0.01"
-                  />
+                  <el-slider @change="handleChange" v-model="treeconfig.collapse.style['stroke-opacity']" :min="0"
+                    :max="1" :step="0.01" />
                   <span>{{ treeconfig.collapse.style["stroke-opacity"] }}</span>
                 </div>
               </el-col>
@@ -1520,12 +1044,8 @@
               <el-col :span="12">fontSize</el-col>
               <el-col :span="12">
                 <div class="slider">
-                  <el-slider
-                    @change="handleChange"
-                    v-model="treeconfig.collapse.textStyle['font-size']"
-                    :min="0"
-                    :max="60"
-                  />
+                  <el-slider @change="handleChange" v-model="treeconfig.collapse.textStyle['font-size']" :min="0"
+                    :max="60" />
                   <span>{{ treeconfig.collapse.textStyle["font-size"] }}</span>
                 </div>
               </el-col>
@@ -1534,15 +1054,8 @@
               <el-col :span="12">textAnchor</el-col>
               <el-col :span="12">
                 <div class="slider">
-                  <el-select
-                    v-model="treeconfig.nodes.name.style['text-anchor']"
-                    @change="handleChange"
-                  >
-                    <el-option
-                      v-for="item in textAnchor"
-                      :label="item"
-                      :value="item"
-                    ></el-option>
+                  <el-select v-model="treeconfig.nodes.name.style['text-anchor']" @change="handleChange">
+                    <el-option v-for="item in textAnchor" :label="item" :value="item"></el-option>
                   </el-select>
                 </div>
               </el-col>
@@ -1550,47 +1063,29 @@
             <el-row class="line2">
               <el-col :span="12">fontFamily</el-col>
               <el-col :span="12">
-                <el-select
-                  v-model="treeconfig.collapse.textStyle['font-family']"
-                  @change="handleChange"
-                >
-                  <el-option
-                    v-for="item in FontFamily"
-                    :label="item"
-                    :value="item"
-                  ></el-option>
+                <el-select v-model="treeconfig.collapse.textStyle['font-family']" @change="handleChange">
+                  <el-option v-for="item in FontFamily" :label="item" :value="item"></el-option>
                 </el-select>
               </el-col>
             </el-row>
             <el-row class="line2">
               <el-col :span="12">fill</el-col>
               <el-col :span="12">
-                <el-color-picker
-                  @change="handleChange"
-                  v-model="treeconfig.collapse.textStyle.fill"
-                />
+                <el-color-picker @change="handleChange" v-model="treeconfig.collapse.textStyle.fill" />
               </el-col>
             </el-row>
             <el-row class="line2">
               <el-col :span="12">stroke</el-col>
               <el-col :span="12">
-                <el-color-picker
-                  @change="handleChange"
-                  v-model="treeconfig.collapse.textStyle.stroke"
-                />
+                <el-color-picker @change="handleChange" v-model="treeconfig.collapse.textStyle.stroke" />
               </el-col>
             </el-row>
             <el-row class="line2">
               <el-col :span="12">opacity</el-col>
               <el-col :span="12">
                 <div class="slider">
-                  <el-slider
-                    @change="handleChange"
-                    v-model="treeconfig.collapse.textStyle.opacity"
-                    :min="0"
-                    :max="1"
-                    :step="0.01"
-                  />
+                  <el-slider @change="handleChange" v-model="treeconfig.collapse.textStyle.opacity" :min="0" :max="1"
+                    :step="0.01" />
                   <span>{{ treeconfig.collapse.textStyle.opacity }}</span>
                 </div>
               </el-col>
@@ -1599,15 +1094,11 @@
               <el-col :span="12">strokeDasharray</el-col>
               <el-col :span="12">
                 <div class="slider">
-                  <el-slider
-                    @change="handleChange"
-                    v-model="treeconfig.collapse.textStyle['stroke-dasharray']"
-                    :min="0"
-                    :max="10"
-                  />
+                  <el-slider @change="handleChange" v-model="treeconfig.collapse.textStyle['stroke-dasharray']" :min="0"
+                    :max="10" />
                   <span>{{
                     treeconfig.collapse.textStyle["stroke-dasharray"]
-                  }}</span>
+                    }}</span>
                 </div>
               </el-col>
             </el-row>
@@ -1615,16 +1106,11 @@
               <el-col :span="12">strokeWidth</el-col>
               <el-col :span="12">
                 <div class="slider">
-                  <el-slider
-                    @change="handleChange"
-                    v-model="treeconfig.collapse.textStyle['stroke-width']"
-                    :min="0"
-                    :max="10"
-                    :step="0.01"
-                  />
+                  <el-slider @change="handleChange" v-model="treeconfig.collapse.textStyle['stroke-width']" :min="0"
+                    :max="10" :step="0.01" />
                   <span>{{
                     treeconfig.collapse.textStyle["stroke-width"]
-                  }}</span>
+                    }}</span>
                 </div>
               </el-col>
             </el-row>
@@ -1632,16 +1118,11 @@
               <el-col :span="12">strokeOacity</el-col>
               <el-col :span="12">
                 <div class="slider">
-                  <el-slider
-                    @change="handleChange"
-                    v-model="treeconfig.collapse.textStyle['stroke-opacity']"
-                    :min="0"
-                    :max="1"
-                    :step="0.01"
-                  />
+                  <el-slider @change="handleChange" v-model="treeconfig.collapse.textStyle['stroke-opacity']" :min="0"
+                    :max="1" :step="0.01" />
                   <span>{{
                     treeconfig.collapse.textStyle["stroke-opacity"]
-                  }}</span>
+                    }}</span>
                 </div>
               </el-col>
             </el-row>
@@ -1656,32 +1137,21 @@
             <el-row class="line2">
               <el-col :span="12">fill</el-col>
               <el-col :span="12">
-                <el-color-picker
-                  @change="handleChange"
-                  v-model="treeconfig.collapse.symbolStyle.fill"
-                />
+                <el-color-picker @change="handleChange" v-model="treeconfig.collapse.symbolStyle.fill" />
               </el-col>
             </el-row>
             <el-row class="line2">
               <el-col :span="12">stroke</el-col>
               <el-col :span="12">
-                <el-color-picker
-                  @change="handleChange"
-                  v-model="treeconfig.collapse.symbolStyle.stroke"
-                />
+                <el-color-picker @change="handleChange" v-model="treeconfig.collapse.symbolStyle.stroke" />
               </el-col>
             </el-row>
             <el-row class="line2">
               <el-col :span="12">opacity</el-col>
               <el-col :span="12">
                 <div class="slider">
-                  <el-slider
-                    @change="handleChange"
-                    v-model="treeconfig.collapse.symbolStyle.opacity"
-                    :min="0"
-                    :max="1"
-                    :step="0.01"
-                  />
+                  <el-slider @change="handleChange" v-model="treeconfig.collapse.symbolStyle.opacity" :min="0" :max="1"
+                    :step="0.01" />
                   <span>{{ treeconfig.collapse.symbolStyle.opacity }}</span>
                 </div>
               </el-col>
@@ -1690,17 +1160,11 @@
               <el-col :span="12">strokeDasharray</el-col>
               <el-col :span="12">
                 <div class="slider">
-                  <el-slider
-                    @change="handleChange"
-                    v-model="
-                      treeconfig.collapse.symbolStyle['stroke-dasharray']
-                    "
-                    :min="0"
-                    :max="10"
-                  />
+                  <el-slider @change="handleChange" v-model="treeconfig.collapse.symbolStyle['stroke-dasharray']
+                    " :min="0" :max="10" />
                   <span>{{
                     treeconfig.collapse.symbolStyle["stroke-dasharray"]
-                  }}</span>
+                    }}</span>
                 </div>
               </el-col>
             </el-row>
@@ -1708,16 +1172,11 @@
               <el-col :span="12">strokeWidth</el-col>
               <el-col :span="12">
                 <div class="slider">
-                  <el-slider
-                    @change="handleChange"
-                    v-model="treeconfig.collapse.symbolStyle['stroke-width']"
-                    :min="0"
-                    :max="10"
-                    :step="0.01"
-                  />
+                  <el-slider @change="handleChange" v-model="treeconfig.collapse.symbolStyle['stroke-width']" :min="0"
+                    :max="10" :step="0.01" />
                   <span>{{
                     treeconfig.collapse.symbolStyle["stroke-width"]
-                  }}</span>
+                    }}</span>
                 </div>
               </el-col>
             </el-row>
@@ -1725,16 +1184,11 @@
               <el-col :span="12">strokeOacity</el-col>
               <el-col :span="12">
                 <div class="slider">
-                  <el-slider
-                    @change="handleChange"
-                    v-model="treeconfig.collapse.symbolStyle['stroke-opacity']"
-                    :min="0"
-                    :max="1"
-                    :step="0.01"
-                  />
+                  <el-slider @change="handleChange" v-model="treeconfig.collapse.symbolStyle['stroke-opacity']" :min="0"
+                    :max="1" :step="0.01" />
                   <span>{{
                     treeconfig.collapse.symbolStyle["stroke-opacity"]
-                  }}</span>
+                    }}</span>
                 </div>
               </el-col>
             </el-row>
@@ -1746,22 +1200,13 @@
         <el-row class="line">
           <el-col :span="12">show</el-col>
           <el-col :span="12">
-            <el-switch
-              active-color="#42bec3"
-              v-model="treeconfig.stretch.show"
-              @change="handleChange"
-            />
+            <el-switch active-color="#42bec3" v-model="treeconfig.stretch.show" @change="handleChange" />
           </el-col>
         </el-row>
         <el-row class="line">
           <el-col :span="12">configure</el-col>
           <el-col :span="12">
-            <el-button
-              size="small"
-              color="#42bec3"
-              @click="addline"
-              :icon="Plus"
-            ></el-button>
+            <el-button size="small" color="#42bec3" @click="addline" :icon="Plus"></el-button>
           </el-col>
         </el-row>
         <el-row class="lineul">
@@ -1775,44 +1220,26 @@
                   <el-row>
                     <el-col :span="24">
                       <label>max:</label>
-                      <el-slider
-                        @change="handleChange"
-                        v-model="item.maxLength"
-                        :min="stretchdatamin"
-                        :max="stretchdatamax"
-                        :step="0.001"
-                      />
+                      <el-slider @change="handleChange" v-model="item.maxLength" :min="stretchdatamin"
+                        :max="stretchdatamax" :step="0.001" />
                       <span>{{ item.maxLength }}</span>
                     </el-col>
                   </el-row>
                   <el-row>
                     <el-col :span="24">
                       <label style="width: 55px">multiple:</label>
-                      <el-slider
-                        @change="handleChange"
-                        v-model="item.multiple"
-                        :step="0.001"
-                      />
+                      <el-slider @change="handleChange" v-model="item.multiple" :step="0.001" />
                       <span>{{ item.multiple }}</span>
                     </el-col>
                   </el-row>
                   <el-row>
                     <el-col :span="24">
                       <label style="width: 55px">color:</label>
-                      <el-color-picker
-                        v-model="item.color"
-                        @change="handleChange"
-                      />
+                      <el-color-picker v-model="item.color" @change="handleChange" />
                     </el-col>
                   </el-row>
-                  <el-button
-                    type="warning"
-                    size="mini"
-                    circle
-                    @click="deleteLine(index)"
-                    :icon="Delete"
-                    @change="handleChange"
-                  ></el-button>
+                  <el-button type="warning" size="mini" circle @click="deleteLine(index)" :icon="Delete"
+                    @change="handleChange"></el-button>
                 </div>
               </li>
             </ul>
@@ -1820,36 +1247,24 @@
         </el-row>
       </el-collapse-item>
       <!-- 11.图例配置 -->
-      <el-collapse-item
-        :title="$t('application.olegendconfiguration')"
-        name="25"
-      >
+      <el-collapse-item :title="$t('application.olegendconfiguration')" name="25">
         <div class="line">
           <el-row>
             <el-col :span="12">legend</el-col>
             <el-col :span="12">
-              <el-upload
-                style="display: inline-block; padding-right: 5px"
-                ref="legendupload"
-                class="upload-demo"
-                action=""
-                :limit="1"
-                accept=".csv"
-                :max-size="maxFileSize"
-                :on-exceed="handleLegendExceed"
-                :on-change="handleLegendChange"
-                :auto-upload="false"
-              >
+              <el-upload style="display: inline-block; padding-right: 5px" ref="legendupload" class="upload-demo"
+                action="" :limit="1" accept=".csv" :max-size="maxFileSize" :on-exceed="handleLegendExceed"
+                :on-change="handleLegendChange" :auto-upload="false">
                 <el-button color="#42bec3">{{
                   $t("application.uploaddata")
-                }}</el-button>
+                  }}</el-button>
               </el-upload>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="12" style="text-indent: 2em">{{
               $t("application.downloadtemplate")
-            }}</el-col>
+              }}</el-col>
             <el-col :span="12">
               <a :href="legendurl">
                 <el-button size="small" color="#42bec3" :icon="Download" />
@@ -1861,23 +1276,14 @@
         <el-row class="line">
           <el-col :span="12">show</el-col>
           <el-col :span="12">
-            <el-switch
-              active-color="#42bec3"
-              v-model="treeconfig.legend.show"
-              @change="handleChange"
-            />
+            <el-switch active-color="#42bec3" v-model="treeconfig.legend.show" @change="handleChange" />
           </el-col>
         </el-row>
         <el-row class="line">
           <el-col :span="12">dx</el-col>
           <el-col :span="12">
             <div class="slider">
-              <el-slider
-                @change="handleChange"
-                v-model="treeconfig.legend.dx"
-                :min="-100"
-                :max="100"
-              />
+              <el-slider @change="handleChange" v-model="treeconfig.legend.dx" :min="-100" :max="100" />
               <span>{{ treeconfig.legend.dx }}</span>
             </div>
           </el-col>
@@ -1886,12 +1292,7 @@
           <el-col :span="12">dy</el-col>
           <el-col :span="12">
             <div class="slider">
-              <el-slider
-                @change="handleChange"
-                v-model="treeconfig.legend.dy"
-                :min="-100"
-                :max="100"
-              />
+              <el-slider @change="handleChange" v-model="treeconfig.legend.dy" :min="-100" :max="100" />
               <span>{{ treeconfig.legend.dy }}</span>
             </div>
           </el-col>
@@ -1900,12 +1301,7 @@
           <el-col :span="12">distance</el-col>
           <el-col :span="12">
             <div class="slider">
-              <el-slider
-                @change="handleChange"
-                v-model="treeconfig.legend.distance"
-                :min="0"
-                :max="20"
-              />
+              <el-slider @change="handleChange" v-model="treeconfig.legend.distance" :min="0" :max="20" />
               <span>{{ treeconfig.legend.distance }}</span>
             </div>
           </el-col>
@@ -1917,23 +1313,14 @@
         <el-row class="line">
           <el-col :span="12">show</el-col>
           <el-col :span="12">
-            <el-switch
-              active-color="#42bec3"
-              v-model="treeconfig.scaleBar.show"
-              @change="handleChange"
-            />
+            <el-switch active-color="#42bec3" v-model="treeconfig.scaleBar.show" @change="handleChange" />
           </el-col>
         </el-row>
         <el-row class="line">
           <el-col :span="12">dx</el-col>
           <el-col :span="12">
             <div class="slider">
-              <el-slider
-                @change="handleChange"
-                v-model="treeconfig.scaleBar.dx"
-                :min="-100"
-                :max="100"
-              />
+              <el-slider @change="handleChange" v-model="treeconfig.scaleBar.dx" :min="-100" :max="100" />
               <span>{{ treeconfig.scaleBar.dx }}</span>
             </div>
           </el-col>
@@ -1942,12 +1329,7 @@
           <el-col :span="12">dy</el-col>
           <el-col :span="12">
             <div class="slider">
-              <el-slider
-                @change="handleChange"
-                v-model="treeconfig.scaleBar.dy"
-                :min="-100"
-                :max="100"
-              />
+              <el-slider @change="handleChange" v-model="treeconfig.scaleBar.dy" :min="-100" :max="100" />
               <span>{{ treeconfig.scaleBar.dy }}</span>
             </div>
           </el-col>
@@ -1956,12 +1338,7 @@
           <el-col :span="12">length</el-col>
           <el-col :span="12">
             <div class="slider">
-              <el-slider
-                @change="handleChange"
-                v-model="treeconfig.scaleBar.length"
-                :min="-100"
-                :max="100"
-              />
+              <el-slider @change="handleChange" v-model="treeconfig.scaleBar.length" :min="-100" :max="100" />
               <span>{{ treeconfig.scaleBar.length }}</span>
             </div>
           </el-col>
@@ -1969,22 +1346,14 @@
         <el-row class="line">
           <el-col :span="12">stroke</el-col>
           <el-col :span="12">
-            <el-color-picker
-              @change="handleChange"
-              v-model="treeconfig.scaleBar.stroke"
-            />
+            <el-color-picker @change="handleChange" v-model="treeconfig.scaleBar.stroke" />
           </el-col>
         </el-row>
         <el-row class="line">
           <el-col :span="12">tickSize</el-col>
           <el-col :span="12">
             <div class="slider">
-              <el-slider
-                @change="handleChange"
-                v-model="treeconfig.scaleBar.tickSize"
-                :min="-100"
-                :max="100"
-              />
+              <el-slider @change="handleChange" v-model="treeconfig.scaleBar.tickSize" :min="-100" :max="100" />
               <span>{{ treeconfig.scaleBar.tickSize }}</span>
             </div>
           </el-col>
@@ -1993,12 +1362,7 @@
           <el-col :span="12">fontSize</el-col>
           <el-col :span="12">
             <div class="slider">
-              <el-slider
-                @change="handleChange"
-                v-model="treeconfig.scaleBar.fontSize"
-                :min="12"
-                :max="100"
-              />
+              <el-slider @change="handleChange" v-model="treeconfig.scaleBar.fontSize" :min="12" :max="100" />
               <span>{{ treeconfig.scaleBar.fontSize }}</span>
             </div>
           </el-col>
@@ -2009,23 +1373,14 @@
         <el-row class="line">
           <el-col :span="12">show</el-col>
           <el-col :span="12">
-            <el-switch
-              active-color="#42bec3"
-              v-model="treeconfig.scaleLinear.show"
-              @change="handleChange"
-            />
+            <el-switch active-color="#42bec3" v-model="treeconfig.scaleLinear.show" @change="handleChange" />
           </el-col>
         </el-row>
         <el-row class="line">
           <el-col :span="12">dx</el-col>
           <el-col :span="12">
             <div class="slider">
-              <el-slider
-                @change="handleChange"
-                v-model="treeconfig.scaleLinear.dx"
-                :min="-100"
-                :max="100"
-              />
+              <el-slider @change="handleChange" v-model="treeconfig.scaleLinear.dx" :min="-100" :max="100" />
               <span>{{ treeconfig.scaleLinear.dx }}</span>
             </div>
           </el-col>
@@ -2034,12 +1389,7 @@
           <el-col :span="12">dy</el-col>
           <el-col :span="12">
             <div class="slider">
-              <el-slider
-                @change="handleChange"
-                v-model="treeconfig.scaleLinear.dy"
-                :min="-100"
-                :max="100"
-              />
+              <el-slider @change="handleChange" v-model="treeconfig.scaleLinear.dy" :min="-100" :max="100" />
               <span>{{ treeconfig.scaleLinear.dy }}</span>
             </div>
           </el-col>
@@ -2048,12 +1398,7 @@
           <el-col :span="12">ticks</el-col>
           <el-col :span="12">
             <div class="slider">
-              <el-slider
-                @change="handleChange"
-                v-model="treeconfig.scaleLinear.ticks"
-                :min="-100"
-                :max="100"
-              />
+              <el-slider @change="handleChange" v-model="treeconfig.scaleLinear.ticks" :min="-100" :max="100" />
               <span>{{ treeconfig.scaleLinear.ticks }}</span>
             </div>
           </el-col>
@@ -2063,15 +1408,8 @@
             <label>type</label>
           </el-col>
           <el-col :span="12">
-            <el-select
-              v-model="treeconfig.scaleLinear.type"
-              @change="handleChange"
-            >
-              <el-option
-                v-for="(item, index) in Type"
-                :label="item"
-                :value="item"
-              ></el-option>
+            <el-select v-model="treeconfig.scaleLinear.type" @change="handleChange">
+              <el-option v-for="(item, index) in Type" :label="item" :value="item"></el-option>
             </el-select>
           </el-col>
         </el-row>
@@ -2080,10 +1418,7 @@
             <label>timeFormat</label>
           </el-col>
           <el-col :span="12">
-            <el-input
-              v-model="treeconfig.scaleLinear.timeFormat"
-              @change="handleChange"
-            ></el-input>
+            <el-input v-model="treeconfig.scaleLinear.timeFormat" @change="handleChange"></el-input>
           </el-col>
         </el-row>
         <el-row class="line">
@@ -2091,15 +1426,8 @@
             <label>position</label>
           </el-col>
           <el-col :span="12">
-            <el-select
-              v-model="treeconfig.scaleLinear.position"
-              @change="handleChange"
-            >
-              <el-option
-                v-for="(item, index) in Position"
-                :label="item"
-                :value="item"
-              ></el-option>
+            <el-select v-model="treeconfig.scaleLinear.position" @change="handleChange">
+              <el-option v-for="(item, index) in Position" :label="item" :value="item"></el-option>
             </el-select>
           </el-col>
         </el-row>
@@ -2108,21 +1436,11 @@
             <label>domain</label>
           </el-col>
           <el-col :span="12">
-            <el-input
-              type="number"
-              placeholder="min"
-              style="width: 50px; display: inline-block"
-              v-model="treeconfig.scaleLinear.domain[0]"
-              @change="handleChange"
-            ></el-input>
+            <el-input type="number" placeholder="min" style="width: 50px; display: inline-block"
+              v-model="treeconfig.scaleLinear.domain[0]" @change="handleChange"></el-input>
             -
-            <el-input
-              type="number"
-              placeholder="max"
-              style="width: 50px; display: inline-block"
-              v-model="treeconfig.scaleLinear.domain[1]"
-              @change="handleChange"
-            ></el-input>
+            <el-input type="number" placeholder="max" style="width: 50px; display: inline-block"
+              v-model="treeconfig.scaleLinear.domain[1]" @change="handleChange"></el-input>
           </el-col>
         </el-row>
         <!-- yLine -->
@@ -2134,37 +1452,24 @@
             <el-row class="line2">
               <el-col :span="12">show</el-col>
               <el-col :span="12">
-                <el-switch
-                  active-color="#42bec3"
-                  v-model="treeconfig.scaleLinear.yLine.show"
-                  @change="handleChange"
-                />
+                <el-switch active-color="#42bec3" v-model="treeconfig.scaleLinear.yLine.show" @change="handleChange" />
               </el-col>
             </el-row>
             <el-row class="line2">
               <el-col :span="12">stroke</el-col>
               <el-col :span="12">
-                <el-color-picker
-                  @change="handleChange"
-                  v-model="treeconfig.scaleLinear.yLine.style.stroke"
-                />
+                <el-color-picker @change="handleChange" v-model="treeconfig.scaleLinear.yLine.style.stroke" />
               </el-col>
             </el-row>
             <el-row class="line2">
               <el-col :span="12">strokeDasharray</el-col>
               <el-col :span="12">
                 <div class="slider">
-                  <el-slider
-                    @change="handleChange"
-                    v-model="
-                      treeconfig.scaleLinear.yLine.style['stroke-dasharray']
-                    "
-                    :min="0"
-                    :max="10"
-                  />
+                  <el-slider @change="handleChange" v-model="treeconfig.scaleLinear.yLine.style['stroke-dasharray']
+                    " :min="0" :max="10" />
                   <span>{{
                     treeconfig.scaleLinear.yLine.style["stroke-dasharray"]
-                  }}</span>
+                    }}</span>
                 </div>
               </el-col>
             </el-row>
@@ -2172,16 +1477,11 @@
               <el-col :span="12">strokeWidth</el-col>
               <el-col :span="12">
                 <div class="slider">
-                  <el-slider
-                    @change="handleChange"
-                    v-model="treeconfig.scaleLinear.yLine.style['stroke-width']"
-                    :min="0"
-                    :max="10"
-                    :step="0.01"
-                  />
+                  <el-slider @change="handleChange" v-model="treeconfig.scaleLinear.yLine.style['stroke-width']"
+                    :min="0" :max="10" :step="0.01" />
                   <span>{{
                     treeconfig.scaleLinear.yLine.style["stroke-width"]
-                  }}</span>
+                    }}</span>
                 </div>
               </el-col>
             </el-row>
@@ -2189,13 +1489,8 @@
               <el-col :span="12">strokeOacity</el-col>
               <el-col :span="12">
                 <div class="slider">
-                  <el-slider
-                    @change="handleChange"
-                    v-model="treeconfig.scaleLinear.yLine.style.opacity"
-                    :min="0"
-                    :max="1"
-                    :step="0.01"
-                  />
+                  <el-slider @change="handleChange" v-model="treeconfig.scaleLinear.yLine.style.opacity" :min="0"
+                    :max="1" :step="0.01" />
                   <span>{{ treeconfig.scaleLinear.yLine.style.opacity }}</span>
                 </div>
               </el-col>
@@ -2211,23 +1506,14 @@
             <el-row class="line2">
               <el-col :span="12">show</el-col>
               <el-col :span="12">
-                <el-switch
-                  active-color="#42bec3"
-                  v-model="treeconfig.scaleLinear.xTick.show"
-                  @change="handleChange"
-                />
+                <el-switch active-color="#42bec3" v-model="treeconfig.scaleLinear.xTick.show" @change="handleChange" />
               </el-col>
             </el-row>
             <el-row class="line2">
               <el-col :span="12">dx</el-col>
               <el-col :span="12">
                 <div class="slider">
-                  <el-slider
-                    @change="handleChange"
-                    v-model="treeconfig.scaleLinear.xTick.dx"
-                    :min="-100"
-                    :max="100"
-                  />
+                  <el-slider @change="handleChange" v-model="treeconfig.scaleLinear.xTick.dx" :min="-100" :max="100" />
                   <span>{{ treeconfig.scaleLinear.xTick.dx }}</span>
                 </div>
               </el-col>
@@ -2236,12 +1522,7 @@
               <el-col :span="12">dy</el-col>
               <el-col :span="12">
                 <div class="slider">
-                  <el-slider
-                    @change="handleChange"
-                    v-model="treeconfig.scaleLinear.xTick.dy"
-                    :min="-100"
-                    :max="100"
-                  />
+                  <el-slider @change="handleChange" v-model="treeconfig.scaleLinear.xTick.dy" :min="-100" :max="100" />
                   <span>{{ treeconfig.scaleLinear.xTick.dy }}</span>
                 </div>
               </el-col>
@@ -2249,26 +1530,18 @@
             <el-row class="line2">
               <el-col :span="12">stroke</el-col>
               <el-col :span="12">
-                <el-color-picker
-                  @change="handleChange"
-                  v-model="treeconfig.scaleLinear.xTick.style.stroke"
-                />
+                <el-color-picker @change="handleChange" v-model="treeconfig.scaleLinear.xTick.style.stroke" />
               </el-col>
             </el-row>
             <el-row class="line2">
               <el-col :span="12">strokeWidth</el-col>
               <el-col :span="12">
                 <div class="slider">
-                  <el-slider
-                    @change="handleChange"
-                    v-model="treeconfig.scaleLinear.xTick.style['stroke-width']"
-                    :min="0"
-                    :max="10"
-                    :step="0.01"
-                  />
+                  <el-slider @change="handleChange" v-model="treeconfig.scaleLinear.xTick.style['stroke-width']"
+                    :min="0" :max="10" :step="0.01" />
                   <span>{{
                     treeconfig.scaleLinear.xTick.style["stroke-width"]
-                  }}</span>
+                    }}</span>
                 </div>
               </el-col>
             </el-row>
@@ -2276,16 +1549,11 @@
               <el-col :span="12">strokeOpacity</el-col>
               <el-col :span="12">
                 <div class="slider">
-                  <el-slider
-                    @change="handleChange"
-                    v-model="treeconfig.scaleLinear.xTick.style['opacity']"
-                    :min="0"
-                    :max="1"
-                    :step="0.01"
-                  />
+                  <el-slider @change="handleChange" v-model="treeconfig.scaleLinear.xTick.style['opacity']" :min="0"
+                    :max="1" :step="0.01" />
                   <span>{{
                     treeconfig.scaleLinear.xTick.style["opacity"]
-                  }}</span>
+                    }}</span>
                 </div>
               </el-col>
             </el-row>
@@ -2300,23 +1568,14 @@
             <el-row class="line2">
               <el-col :span="12">show</el-col>
               <el-col :span="12">
-                <el-switch
-                  active-color="#42bec3"
-                  v-model="treeconfig.scaleLinear.label.show"
-                  @change="handleChange"
-                />
+                <el-switch active-color="#42bec3" v-model="treeconfig.scaleLinear.label.show" @change="handleChange" />
               </el-col>
             </el-row>
             <el-row class="line2">
               <el-col :span="12">dx</el-col>
               <el-col :span="12">
                 <div class="slider">
-                  <el-slider
-                    @change="handleChange"
-                    v-model="treeconfig.scaleLinear.label.dx"
-                    :min="-100"
-                    :max="100"
-                  />
+                  <el-slider @change="handleChange" v-model="treeconfig.scaleLinear.label.dx" :min="-100" :max="100" />
                   <span>{{ treeconfig.scaleLinear.label.dx }}</span>
                 </div>
               </el-col>
@@ -2325,12 +1584,7 @@
               <el-col :span="12">dy</el-col>
               <el-col :span="12">
                 <div class="slider">
-                  <el-slider
-                    @change="handleChange"
-                    v-model="treeconfig.scaleLinear.label.dy"
-                    :min="-100"
-                    :max="100"
-                  />
+                  <el-slider @change="handleChange" v-model="treeconfig.scaleLinear.label.dy" :min="-100" :max="100" />
                   <span>{{ treeconfig.scaleLinear.label.dy }}</span>
                 </div>
               </el-col>
@@ -2338,44 +1592,30 @@
             <el-row class="line2">
               <el-col :span="12">suffix</el-col>
               <el-col :span="12">
-                <el-input
-                  @change="handleChange"
-                  v-model="treeconfig.scaleLinear.label.suffix"
-                />
+                <el-input @change="handleChange" v-model="treeconfig.scaleLinear.label.suffix" />
               </el-col>
             </el-row>
             <el-row class="line2">
               <el-col :span="12">fill</el-col>
               <el-col :span="12">
-                <el-color-picker
-                  @change="handleChange"
-                  v-model="treeconfig.scaleLinear.label.style.fill"
-                />
+                <el-color-picker @change="handleChange" v-model="treeconfig.scaleLinear.label.style.fill" />
               </el-col>
             </el-row>
             <el-row class="line2">
               <el-col :span="12">stroke</el-col>
               <el-col :span="12">
-                <el-color-picker
-                  @change="handleChange"
-                  v-model="treeconfig.scaleLinear.label.style.stroke"
-                />
+                <el-color-picker @change="handleChange" v-model="treeconfig.scaleLinear.label.style.stroke" />
               </el-col>
             </el-row>
             <el-row class="line2">
               <el-col :span="12">strokeWidth</el-col>
               <el-col :span="12">
                 <div class="slider">
-                  <el-slider
-                    @change="handleChange"
-                    v-model="treeconfig.scaleLinear.label.style['stroke-width']"
-                    :min="0"
-                    :max="10"
-                    :step="0.01"
-                  />
+                  <el-slider @change="handleChange" v-model="treeconfig.scaleLinear.label.style['stroke-width']"
+                    :min="0" :max="10" :step="0.01" />
                   <span>{{
                     treeconfig.scaleLinear.label.style["stroke-width"]
-                  }}</span>
+                    }}</span>
                 </div>
               </el-col>
             </el-row>
@@ -2383,12 +1623,7 @@
               <el-col :span="12">fontSize</el-col>
               <el-col :span="12">
                 <div class="slider">
-                  <el-slider
-                    @change="handleChange"
-                    v-model="treeconfig.labelfontSize"
-                    :min="0"
-                    :max="60"
-                  />
+                  <el-slider @change="handleChange" v-model="treeconfig.labelfontSize" :min="0" :max="60" />
                   <span>{{ treeconfig.labelfontSize }}</span>
                 </div>
               </el-col>
@@ -2396,15 +1631,8 @@
             <el-row class="line2">
               <el-col :span="12">textAnchor</el-col>
               <el-col :span="12">
-                <el-select
-                  v-model="treeconfig.labeltextAnchor"
-                  @change="handleChange"
-                >
-                  <el-option
-                    v-for="item in textAnchor"
-                    :label="item"
-                    :value="item"
-                  ></el-option>
+                <el-select v-model="treeconfig.labeltextAnchor" @change="handleChange">
+                  <el-option v-for="item in textAnchor" :label="item" :value="item"></el-option>
                 </el-select>
               </el-col>
             </el-row>
@@ -2426,7 +1654,7 @@ const { t } = useI18n();
 const emit = defineEmits(["treeOrdinaryConfigTrans"]);
 const props = defineProps({ treeordinaryMessage: Object });
 const activeTreeOrdinary = ref(["11"]);
-const collapseOrdinaryChange = (val) => {};
+const collapseOrdinaryChange = (val) => { };
 const baseupload = ref(null);
 const symbolupload = ref(null);
 const leafupload = ref(null);
@@ -2480,7 +1708,7 @@ let treeconfig = ref({
   // 2.全局样式
   style: {
     fill: "rgba(0, 0, 0, 1)",
-    stroke: "rgba(0, 0, 0, 1)",
+    stroke: "",
     "stroke-width": 0,
     "font-size": 12,
     "font-family": "Microsoft YaHei",
@@ -2627,8 +1855,10 @@ let treeconfig = ref({
     data: [],
   },
   // 6.元数据配置metadata
+  label: [],
   sign: {
     show: false,
+    headershow: false,
     dx: 0,
     dy: 0,
     distance: 0, // 图例间隙大小
@@ -2805,13 +2035,13 @@ let treeconfig = ref({
       },
     },
   },
-  tree_file_cfg:{
-    leafs:'',
-    symbol:'',
-    sign:'',
-    tooltip:'',
-    legend:'',
-    division:'',
+  tree_file_cfg: {
+    leafs: '',
+    symbol: '',
+    sign: '',
+    tooltip: '',
+    legend: '',
+    division: '',
 
   }
 });
@@ -2827,16 +2057,16 @@ const deleteLine = (num) => {
 };
 const treeConfigTrans = (treeconfigvalue) => {
   if (treeconfigvalue.content) {
-      treeconfigvalue.tree_file_cfg.leafs = newleafs ? newleafs : oldleafs;
-      treeconfigvalue.tree_file_cfg.symbol = newsymbol ? newsymbol : oldsymbol;
-      treeconfigvalue.tree_file_cfg.sign = newsign ? newsign : oldsign;
-      treeconfigvalue.tree_file_cfg.tooltip = newtooltip
-        ? newtooltip
-        : oldtooltip;
-      treeconfigvalue.tree_file_cfg.legend = newlegend ? newlegend : oldlegend;
-      treeconfigvalue.tree_file_cfg.division = newdivision
-        ? newdivision
-        : olddivision;
+    treeconfigvalue.tree_file_cfg.leafs = newleafs ? newleafs : oldleafs;
+    treeconfigvalue.tree_file_cfg.symbol = newsymbol ? newsymbol : oldsymbol;
+    treeconfigvalue.tree_file_cfg.sign = newsign ? newsign : oldsign;
+    treeconfigvalue.tree_file_cfg.tooltip = newtooltip
+      ? newtooltip
+      : oldtooltip;
+    treeconfigvalue.tree_file_cfg.legend = newlegend ? newlegend : oldlegend;
+    treeconfigvalue.tree_file_cfg.division = newdivision
+      ? newdivision
+      : olddivision;
     emit("treeOrdinaryConfigTrans", treeconfigvalue);
   } else {
     noTreeFileWarning()
@@ -2846,9 +2076,9 @@ const treeConfigTrans = (treeconfigvalue) => {
 const noTreeFileWarning = () => {
   closeLoading()
   ElMessage({
-      message: t("application.uploadtreefile"),
-      type: "warning",
-    });
+    message: t("application.uploadtreefile"),
+    type: "warning",
+  });
 };
 // 1.newick文件上传
 const handleTreeOrdinaryExceed = (files) => {
@@ -3050,6 +2280,7 @@ const handleMetadataChange = (file) => {
           stretchdatamin.value = res.min_len;
           stretchdatamax.value = res.max_len;
           treeconfig.value.sign.data = res.content;
+          copySignToLabel()
           newsign = res.id;
           treeConfigTrans(treeconfig.value);
         }
@@ -3132,6 +2363,7 @@ const handleLegendChange = (file) => {
 // 导入json 导出json
 const onFileChange = (e) => {
   const file = e.target.files[0];
+  console.log(file,'file1111111')
   if (file) {
     const reader = new FileReader();
     reader.onload = (event) => {
@@ -3142,23 +2374,28 @@ const onFileChange = (e) => {
       let legend = ""
       let division = ""
       treeconfig.value = JSON.parse(event.target.result);
+      copySignToLabel()
       oldsymbol = JSON.parse(event.target.result).tree_file_cfg.symbol
       oldleafs = JSON.parse(event.target.result).tree_file_cfg.leafs
       oldsign = JSON.parse(event.target.result).tree_file_cfg.sign
       oldtooltip = JSON.parse(event.target.result).tree_file_cfg.tooltip
       oldlegend = JSON.parse(event.target.result).tree_file_cfg.legend
       olddivision = JSON.parse(event.target.result).tree_file_cfg.division
-      treeConfigTrans(treeconfig.value);
+      treeconfig.value.label = []
+      handleChange()
+      // treeConfigTrans(treeconfig.value);
     };
     reader.readAsText(file);
   } else {
     treeconfig.value = null;
   }
+  e.target.value = "";
 };
 const importJSON = () => {
   const input = document.querySelector(".ordinaryfile");
+  console.log('a')
   input.click();
-  console.log(treeconfig.value);
+
 };
 const exportJSON = () => {
   let jsonData = treeconfig.value;
@@ -3169,19 +2406,49 @@ const exportJSON = () => {
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = "data.json";
+    a.download = "tree_config.json";
+    document.body.appendChild(a);
     a.click();
+    document.body.removeChild(a);
     URL.revokeObjectURL(url);
   }
 };
+// phyloscape插件问题，在radial时，不展示header
+const copySignToLabel = () => {
+  let label = []
+  if (treeconfig.value.layout == 'radial') {
+    if (treeconfig.value.sign.headershow) {
+      if (treeconfig.value.sign.data) {
+        for (let i in treeconfig.value.sign.data) {
+          label[i] = treeconfig.value.sign.data[i].label
+          // label[i].dx = (i + 1) * 10 + 240 + treeconfig.value.sign.data[i].distance
+        }
+      }
+    }
+  }
+  treeconfig.value.label = label
+
+  console.log(treeconfig.value.label)
+}
+const setSignLabel = () => {
+  for (let i in treeconfig.value.sign.data) {
+    treeconfig.value.sign.data[i].label.show = treeconfig.value.sign.headershow
+  }
+}
 // 配置项改动时触发
 const handleChange = (params) => {
-  if (params && params.key == "layout") {
-    if (treeconfig.value.layout == "tree") {
-      treeconfig.value.size = [];
-    } else if (treeconfig.value.layout == "radial") {
-      treeconfig.value.size = [350, 1000];
-    }
+  if (treeconfig.value.layout == "tree") {
+    treeconfig.value.size = [];
+  } else if (treeconfig.value.layout == "radial") {
+    treeconfig.value.size = [350, 1000];
+  }
+  
+  if (params && params.key == "headershow") {
+    // 对sign中的label设置false
+    setSignLabel()
+    copySignToLabel()
+  }else{
+    copySignToLabel()
   }
   treeConfigTrans(treeconfig.value);
 };
@@ -3212,6 +2479,7 @@ const getConfig = (value) => {
         legend: oldlegend,
         division: olddivision,
       };
+      treeconfig.value.label = []
       handleChange();
     }
   });
@@ -3222,7 +2490,7 @@ watch(
     getConfig(newValue);
   }
 );
-onMounted(() => {});
+onMounted(() => { });
 </script>
 <style lang="scss" scoped>
 .line {
@@ -3231,14 +2499,17 @@ onMounted(() => {});
   border-left: 4px solid #42bec3;
   padding-left: 5px;
   margin-bottom: 2px;
+
   :deep(.el-upload-list__item-file-name) {
     width: 100%;
     max-width: 90px;
   }
+
   .el-button {
     color: white;
   }
 }
+
 .upload-demo {
   flex: 1;
 }
@@ -3249,28 +2520,35 @@ onMounted(() => {});
     width: 25px;
     height: 25px;
   }
+
   ul,
   li {
     margin: 0;
     padding-left: 5px;
     list-style: none;
+
     .el-row {
       margin: 3px;
+
       .el-col-24 {
         display: flex;
+
         label {
           width: 55px;
         }
+
         .el-input {
           flex: 1;
         }
       }
     }
   }
+
   li {
     padding: 10px;
     border-bottom: 1px solid #ccc;
     display: flex;
+
     .lileft {
       width: 30px;
       height: 30px;
@@ -3282,11 +2560,13 @@ onMounted(() => {});
       font-weight: bold;
       color: red;
     }
+
     .liright {
       flex: 1;
     }
   }
 }
+
 .line2 {
   height: 32px;
   line-height: 32px;
@@ -3294,6 +2574,7 @@ onMounted(() => {});
   padding-left: 5px;
   margin-bottom: 2px;
 }
+
 .rowlabel {
   border-left: 4px solid #42bec3;
   height: 36px;
@@ -3301,15 +2582,18 @@ onMounted(() => {});
   display: inline-block;
   padding-left: 5px;
 }
+
 .collapsewrap {
   .slider {
     display: flex;
     align-items: center;
   }
+
   :deep(.el-slider) {
     width: 80%;
     padding-left: 5px;
   }
+
   span {
     width: 30px;
     padding-left: 10px;
